@@ -1,0 +1,49 @@
+package ipb.pt.safeeat.service;
+
+import ipb.pt.safeeat.constants.ExceptionConstants;
+import ipb.pt.safeeat.model.Delivery;
+import ipb.pt.safeeat.model.Feedback;
+import ipb.pt.safeeat.repository.DeliveryRepository;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class DeliveryService {
+    @Autowired
+    private DeliveryRepository deliveryRepository;
+
+    public List<Delivery> getAll() {
+        return deliveryRepository.findAll();
+    }
+
+    public Delivery findById(UUID id) {
+        return deliveryRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.DELIVERY_NOT_FOUND));
+    }
+
+    public Delivery create(Delivery delivery) {
+        return deliveryRepository.save(delivery);
+    }
+
+    public List<Delivery> createMany(List<Delivery> deliveries) {
+        return deliveryRepository.saveAll(deliveries);
+    }
+
+    public Delivery update(Delivery delivery) {
+        Delivery old = deliveryRepository.findById(delivery.getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.DELIVERY_NOT_FOUND));
+
+        BeanUtils.copyProperties(delivery, old);
+        return deliveryRepository.save(delivery);
+    }
+
+    public void delete(UUID id) {
+        deliveryRepository.deleteById(id);
+    }
+}
