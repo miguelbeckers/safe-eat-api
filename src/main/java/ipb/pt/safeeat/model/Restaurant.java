@@ -23,7 +23,8 @@ public class Restaurant {
     private String logo;
     @NotEmpty(message = "invalid cover")
     private String cover;
-    @NotEmpty(message = "invalid delivery")
+    @DocumentReference
+    @ReadOnlyProperty
     private Delivery delivery;
     @DocumentReference
     @ReadOnlyProperty

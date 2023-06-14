@@ -1,9 +1,6 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.CategoryConstants;
-import ipb.pt.safeeat.constants.IngredientConstants;
-import ipb.pt.safeeat.constants.ProductConstants;
-import ipb.pt.safeeat.constants.RestaurantConstants;
+import ipb.pt.safeeat.constants.*;
 import ipb.pt.safeeat.model.*;
 import ipb.pt.safeeat.repository.*;
 import org.springframework.beans.BeanUtils;
@@ -67,12 +64,19 @@ public class ProductService {
         Product old = productRepository.findById(product.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
 
+        if(!product.getRestaurant().equals(old.getRestaurant())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, RestaurantConstants.CHANGED);
+        }
+
         checkDependencies(product);
         BeanUtils.copyProperties(product, old);
         return productRepository.save(product);
     }
 
     public void delete(String id) {
+        productRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
+
         productRepository.deleteById(id);
     }
 }

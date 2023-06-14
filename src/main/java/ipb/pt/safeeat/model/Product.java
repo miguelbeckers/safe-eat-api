@@ -24,8 +24,10 @@ public class Product {
     @ReadOnlyProperty
     private Boolean isRestricted;
     @DocumentReference
+    @NotEmpty(message = "invalid categories")
     private List<Category> categories;
     @DocumentReference
+    @NotEmpty(message = "invalid ingredients")
     private List<Ingredient> ingredients;
     @NotEmpty(message = "invalid restaurant")
     @DocumentReference

@@ -1,18 +1,19 @@
 package ipb.pt.safeeat.service;
 
+import ipb.pt.safeeat.constants.RestrictionConstants;
 import ipb.pt.safeeat.constants.UserConstants;
 import ipb.pt.safeeat.model.*;
 import ipb.pt.safeeat.repository.CartRepository;
+import ipb.pt.safeeat.repository.RestrictionRepository;
 import ipb.pt.safeeat.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -21,6 +22,9 @@ public class UserService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private RestrictionRepository restrictionRepository;
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -41,6 +45,23 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateRestrictions(List<Restriction> restrictions, String id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
+
+        List<Restriction> original = new ArrayList<>();
+
+        for (Restriction restriction : restrictions) {
+            Restriction foundRestriction = restrictionRepository.findById(restriction.getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND));
+
+            original.add(foundRestriction);
+        }
+
+        user.getRestrictions().addAll(original);
+        return userRepository.save(user);
+    }
+
     public User update(User user) {
         User old = userRepository.findById(user.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
@@ -50,6 +71,9 @@ public class UserService {
     }
 
     public void delete(String id) {
+        userRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
+
         userRepository.deleteById(id);
     }
 }

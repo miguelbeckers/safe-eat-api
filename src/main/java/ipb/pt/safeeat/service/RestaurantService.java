@@ -38,6 +38,9 @@ public class RestaurantService {
     }
 
     public void delete(String id) {
+        restaurantRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
+
         restaurantRepository.deleteById(id);
     }
 }
