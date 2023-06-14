@@ -1,9 +1,7 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.AddressConstants;
-import ipb.pt.safeeat.constants.UserConstants;
 import ipb.pt.safeeat.model.Address;
-import ipb.pt.safeeat.model.User;
 import ipb.pt.safeeat.repository.AddressRepository;
 import ipb.pt.safeeat.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AddressService {
@@ -27,19 +24,16 @@ public class AddressService {
         return addressRepository.findAll();
     }
 
-    public Address findById(UUID id) {
+    public Address findById(String id) {
         return addressRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
     }
 
     public Address create(Address address) {
-        User user = userRepository.findById(address.getUser().getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
-
         Address created = addressRepository.save(address);
 
-        user.getAddress().add(created);
-        userRepository.save(user);
+//        user.getAddress().add(created);
+//        userRepository.save(user);
         return created;
     }
 
@@ -51,7 +45,7 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         addressRepository.deleteById(id);
     }
 }

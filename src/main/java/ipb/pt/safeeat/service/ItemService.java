@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ItemService {
@@ -24,7 +23,7 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Item findById(UUID id) {
+    public Item findById(String id) {
         return itemRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
     }

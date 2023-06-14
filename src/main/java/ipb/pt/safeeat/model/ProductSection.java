@@ -15,7 +15,7 @@ import java.util.UUID;
 @Document(collection = "productSections")
 public class ProductSection {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid name")
     private String name;
     @DocumentReference

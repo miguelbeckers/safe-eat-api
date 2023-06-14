@@ -25,7 +25,7 @@ public class CartController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable UUID id) {
+    public ResponseEntity<Object> findById(@PathVariable String id) {
         return ResponseEntity.ok(cartService.findById(id));
     }
 

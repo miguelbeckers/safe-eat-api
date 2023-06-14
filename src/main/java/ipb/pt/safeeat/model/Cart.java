@@ -15,13 +15,11 @@ import java.util.UUID;
 @Document(collection = "carts")
 public class Cart {
     @Id
-    private UUID id;
+    private String id;
     @ReadOnlyProperty
     private Integer quantity;
     @ReadOnlyProperty
     private Double subtotal;
     @DocumentReference
     private List<Item> items;
-    @DocumentReference
-    private Restaurant restaurant;
 }

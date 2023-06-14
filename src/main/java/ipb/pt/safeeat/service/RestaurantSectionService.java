@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class RestaurantSectionService {
@@ -27,7 +26,7 @@ public class RestaurantSectionService {
         return restaurantSectionRepository.findAll();
     }
 
-    public RestaurantSection findById(UUID id) {
+    public RestaurantSection findById(String id) {
         return restaurantSectionRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantSectionConstants.NOT_FOUND));
     }
@@ -53,7 +52,7 @@ public class RestaurantSectionService {
         return restaurantSectionRepository.save(restaurantSection);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         restaurantSectionRepository.deleteById(id);
     }
 }

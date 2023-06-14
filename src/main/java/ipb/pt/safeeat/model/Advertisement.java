@@ -14,7 +14,7 @@ import java.util.UUID;
 @Document(collection = "advertisements")
 public class Advertisement {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid title")
     private String title;
     @NotEmpty(message = "invalid image")

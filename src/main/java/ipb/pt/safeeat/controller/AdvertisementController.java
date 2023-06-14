@@ -3,16 +3,11 @@ package ipb.pt.safeeat.controller;
 import ipb.pt.safeeat.model.Advertisement;
 import ipb.pt.safeeat.service.AdvertisementService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @CrossOrigin
@@ -28,7 +23,7 @@ public class AdvertisementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable UUID id) {
+    public ResponseEntity<Object> findById(@PathVariable String id) {
         return ResponseEntity.ok().body(advertisementService.findById(id));
     }
 
@@ -43,7 +38,7 @@ public class AdvertisementController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable UUID id) {
+    public ResponseEntity<Object> delete(@PathVariable String id) {
         advertisementService.delete(id);
         return ResponseEntity.ok().build();
     }

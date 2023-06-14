@@ -3,7 +3,6 @@ package ipb.pt.safeeat.service;
 import ipb.pt.safeeat.constants.NotificationConstants;
 import ipb.pt.safeeat.constants.OrderConstants;
 import ipb.pt.safeeat.model.Notification;
-import ipb.pt.safeeat.model.Order;
 import ipb.pt.safeeat.repository.NotificationRepository;
 import ipb.pt.safeeat.repository.OrderRepository;
 import org.springframework.beans.BeanUtils;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class NotificationService {
@@ -27,7 +25,7 @@ public class NotificationService {
         return notificationRepository.findAll();
     }
 
-    public Notification findById(UUID id) {
+    public Notification findById(String id) {
         return notificationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, NotificationConstants.NOT_FOUND));
     }
@@ -51,7 +49,7 @@ public class NotificationService {
         return notificationRepository.save(notification);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         notificationRepository.deleteById(id);
     }
 }

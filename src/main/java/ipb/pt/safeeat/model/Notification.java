@@ -16,7 +16,7 @@ import java.util.UUID;
 @Document(collection = "notifications")
 public class Notification {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid title")
     private String title;
     @ReadOnlyProperty

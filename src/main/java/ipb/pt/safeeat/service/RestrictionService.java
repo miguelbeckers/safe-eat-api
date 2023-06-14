@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class RestrictionService {
@@ -21,7 +20,7 @@ public class RestrictionService {
         return restrictionRepository.findAll();
     }
 
-    public Restriction findById(UUID id) {
+    public Restriction findById(String id) {
         return restrictionRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
     }
@@ -38,7 +37,7 @@ public class RestrictionService {
         return restrictionRepository.save(restriction);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         restrictionRepository.deleteById(id);
     }
 }

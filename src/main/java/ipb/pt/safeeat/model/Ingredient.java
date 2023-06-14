@@ -16,7 +16,7 @@ import java.util.UUID;
 @Document(collection = "ingredients")
 public class Ingredient {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid name")
     private String name;
     @NotEmpty(message = "invalid description")

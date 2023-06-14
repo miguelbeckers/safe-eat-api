@@ -14,7 +14,7 @@ import java.util.UUID;
 @Document(collection = "addresses")
 public class Address {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid name")
     private String name;
     @NotEmpty(message = "invalid isDefault")
@@ -29,7 +29,4 @@ public class Address {
     private String city;
     @NotEmpty(message = "invalid postalCode")
     private String postalCode;
-    @NotEmpty(message = "invalid user")
-    @DocumentReference
-    private User user;
 }

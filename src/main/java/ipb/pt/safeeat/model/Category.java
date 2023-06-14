@@ -13,7 +13,7 @@ import java.util.UUID;
 @Document(collection = "categories")
 public class Category {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid name")
     private String name;
     @NotEmpty(message = "invalid image")

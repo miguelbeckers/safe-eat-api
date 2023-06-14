@@ -15,7 +15,7 @@ import java.util.UUID;
 @Document(collection = "homes")
 public class Home {
     @Id
-    private UUID id;
+    private String id;
     @DocumentReference
     private List<Object> content;
 }

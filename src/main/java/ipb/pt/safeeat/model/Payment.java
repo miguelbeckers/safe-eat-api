@@ -14,7 +14,7 @@ import java.util.UUID;
 @Document(collection = "payments")
 public class Payment {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid type")
     private String type;
     @NotEmpty(message = "invalid name")

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Document(collection = "restrictions")
 public class Restriction {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid name")
     private String name;
     @NotEmpty(message = "invalid description")

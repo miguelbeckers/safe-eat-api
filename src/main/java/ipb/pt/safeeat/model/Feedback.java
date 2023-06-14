@@ -14,7 +14,7 @@ import java.util.UUID;
 @Document(collection = "feedbacks")
 public class Feedback {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid rating")
     private Integer rating;
     @NotEmpty(message = "invalid comment")

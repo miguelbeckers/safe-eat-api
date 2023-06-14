@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.UUID;
-
 @Controller
 @CrossOrigin
 @RequestMapping("/items")
@@ -25,7 +23,7 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable UUID id) {
+    public ResponseEntity<Object> findById(@PathVariable String id) {
         return ResponseEntity.ok(itemService.findById(id));
     }
 }

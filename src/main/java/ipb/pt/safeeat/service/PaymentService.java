@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class PaymentService {
@@ -21,7 +20,7 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
-    public Payment findById(UUID id) {
+    public Payment findById(String id) {
         return paymentRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, PaymentConstants.NOT_FOUND));
     }
@@ -38,7 +37,7 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         paymentRepository.deleteById(id);
     }
 }

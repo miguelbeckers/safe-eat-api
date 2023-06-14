@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class FeedbackService {
@@ -26,7 +25,7 @@ public class FeedbackService {
         return feedbackRepository.findAll();
     }
 
-    public Feedback findById(UUID id) {
+    public Feedback findById(String id) {
         return feedbackRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, FeedbackConstants.NOT_FOUND));
     }
@@ -54,7 +53,7 @@ public class FeedbackService {
         return feedbackRepository.save(feedback);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         feedbackRepository.deleteById(id);
     }
 }

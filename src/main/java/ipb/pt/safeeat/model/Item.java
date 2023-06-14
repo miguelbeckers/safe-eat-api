@@ -15,7 +15,7 @@ import java.util.UUID;
 @Document(collection = "items")
 public class Item {
     @Id
-    private UUID id;
+    private String id;
     @DocumentReference
     private Product product;
     @NotEmpty(message = "invalid quantity")

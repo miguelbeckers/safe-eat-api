@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -34,7 +33,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findById(UUID id) {
+    public Product findById(String id) {
         return productRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
     }
@@ -73,7 +72,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         productRepository.deleteById(id);
     }
 }

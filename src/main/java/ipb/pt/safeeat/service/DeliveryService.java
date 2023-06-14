@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class DeliveryService {
@@ -21,7 +20,7 @@ public class DeliveryService {
         return deliveryRepository.findAll();
     }
 
-    public Delivery findById(UUID id) {
+    public Delivery findById(String id) {
         return deliveryRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
     }
@@ -38,7 +37,7 @@ public class DeliveryService {
         return deliveryRepository.save(delivery);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         deliveryRepository.deleteById(id);
     }
 }

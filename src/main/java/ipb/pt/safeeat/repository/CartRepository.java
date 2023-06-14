@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CartRepository extends MongoRepository<Cart, UUID> {
+public interface CartRepository extends MongoRepository<Cart, String> {
 }

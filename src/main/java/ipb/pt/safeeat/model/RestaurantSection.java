@@ -15,7 +15,7 @@ import java.util.UUID;
 @Document(collection = "restaurantSections")
 public class RestaurantSection {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid name")
     private String name;
     @DocumentReference

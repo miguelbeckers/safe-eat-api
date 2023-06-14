@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CategoryService {
@@ -21,7 +20,7 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category findById(UUID id) {
+    public Category findById(String id) {
         return categoryRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
     }
@@ -38,7 +37,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         categoryRepository.deleteById(id);
     }
 }

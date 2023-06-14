@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,8 @@ import java.util.UUID;
 @Document(collection = "users")
 public class User {
     @Id
-    private UUID id;
-    @JsonIgnore
+    private String id;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @NotEmpty(message = "invalid image")
     private String image;
@@ -27,8 +28,9 @@ public class User {
     @NotEmpty(message = "invalid email")
     private String email;
     @NotEmpty(message = "invalid cellphone")
-    private String cellPhone;
+    private String cellphone;
     @DocumentReference
+    @ReadOnlyProperty
     private List<Restriction> restrictions;
     @DocumentReference
     @ReadOnlyProperty

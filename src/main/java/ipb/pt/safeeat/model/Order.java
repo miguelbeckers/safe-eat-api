@@ -17,7 +17,7 @@ import java.util.UUID;
 @Document(collection = "orders")
 public class Order {
     @Id
-    private UUID id;
+    private String id;
     @NotEmpty(message = "invalid status")
     private String status;
     @ReadOnlyProperty
@@ -28,21 +28,17 @@ public class Order {
     private Double total;
     @ReadOnlyProperty
     private Integer quantity;
-    @DocumentReference
     @NotEmpty(message = "invalid address")
     private Address address;
-    @DocumentReference
     @NotEmpty(message = "invalid payment")
     private Payment payment;
-    @DocumentReference
     @NotEmpty(message = "invalid items")
     private List<Item> items;
+    @NotEmpty(message = "invalid delivery")
+    private Delivery delivery;
     @DocumentReference
     @NotEmpty(message = "invalid restaurant")
     private Restaurant restaurant;
-    @DocumentReference
-    @NotEmpty(message = "invalid delivery")
-    private Delivery delivery;
     @DocumentReference
     private Feedback feedback;
 }

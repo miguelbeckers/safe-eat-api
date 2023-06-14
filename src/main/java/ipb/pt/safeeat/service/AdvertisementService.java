@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AdvertisementService {
@@ -27,7 +26,7 @@ public class AdvertisementService {
         return advertisementRepository.findAll();
     }
 
-    public Advertisement findById(UUID id) {
+    public Advertisement findById(String id) {
         return advertisementRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
     }
@@ -54,7 +53,7 @@ public class AdvertisementService {
         return advertisementRepository.save(advertisement);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         advertisementRepository.deleteById(id);
     }
 }

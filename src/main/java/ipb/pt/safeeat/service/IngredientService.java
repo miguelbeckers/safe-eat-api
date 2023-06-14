@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class IngredientService {
@@ -28,7 +27,7 @@ public class IngredientService {
         return ingredientRepository.findAll();
     }
 
-    public Ingredient findById(UUID id) {
+    public Ingredient findById(String id) {
         return ingredientRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
     }
@@ -55,7 +54,7 @@ public class IngredientService {
         return ingredientRepository.save(ingredient);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         ingredientRepository.deleteById(id);
     }
 }

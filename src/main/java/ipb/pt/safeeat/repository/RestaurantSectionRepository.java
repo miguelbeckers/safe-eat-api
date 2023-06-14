@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface RestaurantSectionRepository extends MongoRepository<RestaurantSection, UUID> {
+public interface RestaurantSectionRepository extends MongoRepository<RestaurantSection, String> {
 }

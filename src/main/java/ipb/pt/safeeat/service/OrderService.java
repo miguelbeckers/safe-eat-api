@@ -12,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -44,7 +43,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order findById(UUID id) {
+    public Order findById(String id) {
         return orderRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
     }
@@ -96,7 +95,7 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         orderRepository.deleteById(id);
     }
 }

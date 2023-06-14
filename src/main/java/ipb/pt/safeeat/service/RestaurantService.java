@@ -1,7 +1,6 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.*;
-import ipb.pt.safeeat.model.Order;
 import ipb.pt.safeeat.model.Restaurant;
 import ipb.pt.safeeat.repository.RestaurantRepository;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class RestaurantService {
@@ -22,7 +20,7 @@ public class RestaurantService {
         return restaurantRepository.findAll();
     }
 
-    public Restaurant findById(UUID id) {
+    public Restaurant findById(String id) {
         return restaurantRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
     }
@@ -39,7 +37,7 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public void delete(UUID id) {
+    public void delete(String id) {
         restaurantRepository.deleteById(id);
     }
 }
