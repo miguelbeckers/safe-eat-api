@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
@@ -28,13 +29,17 @@ public class User {
     @NotEmpty(message = "invalid cellphone")
     private String cellPhone;
     @DocumentReference
-    private List<Address> address;
-    @DocumentReference
     private List<Restriction> restrictions;
     @DocumentReference
+    @ReadOnlyProperty
+    private List<Address> address;
+    @DocumentReference
+    @ReadOnlyProperty
     private List<Payment> payments;
     @DocumentReference
+    @ReadOnlyProperty
     private List<Order> orders;
     @DocumentReference
+    @ReadOnlyProperty
     private Cart cart;
 }

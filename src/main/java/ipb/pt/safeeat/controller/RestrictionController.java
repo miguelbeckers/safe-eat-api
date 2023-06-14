@@ -37,11 +37,6 @@ public class RestrictionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(restrictionService.create(restriction));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Restriction> restrictions) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(restrictionService.createMany(restrictions));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Restriction restriction) {
         return ResponseEntity.ok().body(restrictionService.update(restriction));

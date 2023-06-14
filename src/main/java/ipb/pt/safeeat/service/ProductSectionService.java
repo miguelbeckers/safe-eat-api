@@ -1,8 +1,10 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.ExceptionConstants;
+import ipb.pt.safeeat.constants.ProductConstants;
+import ipb.pt.safeeat.constants.ProductSectionConstants;
 import ipb.pt.safeeat.model.Product;
 import ipb.pt.safeeat.model.ProductSection;
+import ipb.pt.safeeat.repository.ProductRepository;
 import ipb.pt.safeeat.repository.ProductSectionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +20,36 @@ public class ProductSectionService {
     @Autowired
     private ProductSectionRepository productSectionRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     public List<ProductSection> getAll() {
         return productSectionRepository.findAll();
     }
 
     public ProductSection findById(UUID id) {
         return productSectionRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.PRODUCT_SECTION_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductSectionConstants.INVALID));
     }
 
     public ProductSection create(ProductSection productSection) {
+        checkDependencies(productSection);
+
         return productSectionRepository.save(productSection);
     }
 
-    public List<ProductSection> createMany(List<ProductSection> productSections) {
-        return productSectionRepository.saveAll(productSections);
+    private void checkDependencies(ProductSection productSection) {
+        for(Product product : productSection.getProducts()) {
+            productRepository.findById(product.getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
+        }
     }
 
     public ProductSection update(ProductSection productSection) {
         ProductSection old = productSectionRepository.findById(productSection.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.PRODUCT_SECTION_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductSectionConstants.NOT_FOUND));
 
+        checkDependencies(productSection);
         BeanUtils.copyProperties(productSection, old);
         return productSectionRepository.save(productSection);
     }

@@ -37,11 +37,6 @@ public class PaymentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.create(payment));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Payment> payments) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.createMany(payments));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Payment payment) {
         return ResponseEntity.ok().body(paymentService.update(payment));

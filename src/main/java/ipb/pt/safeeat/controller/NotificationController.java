@@ -37,11 +37,6 @@ public class NotificationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(notificationService.create(notification));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Notification> notifications) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(notificationService.createMany(notifications));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Notification notification) {
         return ResponseEntity.ok().body(notificationService.update(notification));

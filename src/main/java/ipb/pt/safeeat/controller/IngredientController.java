@@ -37,11 +37,6 @@ public class IngredientController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.create(ingredient));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Ingredient> ingredients) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.createMany(ingredients));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Ingredient ingredient) {
         return ResponseEntity.ok().body(ingredientService.update(ingredient));

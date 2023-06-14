@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.ExceptionConstants;
+import ipb.pt.safeeat.constants.FeedbackConstants;
+import ipb.pt.safeeat.constants.OrderConstants;
 import ipb.pt.safeeat.model.*;
 import ipb.pt.safeeat.repository.FeedbackRepository;
 import ipb.pt.safeeat.repository.OrderRepository;
@@ -27,12 +28,12 @@ public class FeedbackService {
 
     public Feedback findById(UUID id) {
         return feedbackRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.FEEDBACK_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, FeedbackConstants.NOT_FOUND));
     }
 
     public Feedback create(Feedback feedback) {
         Order order = orderRepository.findById(feedback.getOrder().getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.ORDER_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
 
         Feedback created = feedbackRepository.save(feedback);
 
@@ -41,27 +42,13 @@ public class FeedbackService {
         return created;
     }
 
-    public List<Feedback> createMany(List<Feedback> feedbacks) {
-        for (Feedback feedback : feedbacks) {
-            Order order = orderRepository.findById(feedback.getOrder().getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.ORDER_NOT_FOUND));
-            feedback.setOrder(order);
-        }
-
-        List<Feedback> created = feedbackRepository.saveAll(feedbacks);
-
-        for (Feedback feedback : created) {
-            Order order = feedback.getOrder();
-            order.setFeedback(feedback);
-            orderRepository.save(order);
-        }
-
-        return created;
-    }
-
     public Feedback update(Feedback feedback) {
         Feedback old = feedbackRepository.findById(feedback.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.FEEDBACK_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, FeedbackConstants.NOT_FOUND));
+
+        if(!feedback.getOrder().equals(old.getOrder())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.CHANGED);
+        }
 
         BeanUtils.copyProperties(feedback, old);
         return feedbackRepository.save(feedback);

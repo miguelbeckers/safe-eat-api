@@ -37,11 +37,6 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(category));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Category> categories) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createMany(categories));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Category category) {
         return ResponseEntity.ok().body(categoryService.update(category));

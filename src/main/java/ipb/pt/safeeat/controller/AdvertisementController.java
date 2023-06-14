@@ -37,11 +37,6 @@ public class AdvertisementController {
         return ResponseEntity.status(HttpStatus.CREATED).body(advertisementService.create(advertisement));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Advertisement> advertisements) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(advertisementService.createMany(advertisements));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Advertisement advertisement) {
         return ResponseEntity.ok().body(advertisementService.update(advertisement));

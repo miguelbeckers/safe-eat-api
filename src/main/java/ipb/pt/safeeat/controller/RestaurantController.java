@@ -37,11 +37,6 @@ public class RestaurantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Restaurant> restaurants) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.createMany(restaurants));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Restaurant restaurant) {
         return ResponseEntity.ok().body(restaurantService.update(restaurant));

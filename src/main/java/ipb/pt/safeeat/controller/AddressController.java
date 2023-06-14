@@ -42,11 +42,6 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressService.create(address));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Address> addresses) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createMany(addresses));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Address address) {
         return ResponseEntity.ok().body(addressService.update(address));

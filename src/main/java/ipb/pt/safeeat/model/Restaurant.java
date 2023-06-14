@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
@@ -25,11 +26,18 @@ public class Restaurant {
     @NotEmpty(message = "invalid delivery")
     private Delivery delivery;
     @DocumentReference
+    @ReadOnlyProperty
     private List<Product> products;
     @DocumentReference
+    @ReadOnlyProperty
     private List<ProductSection> productSections;
     @DocumentReference
+    @ReadOnlyProperty
     private List<Category> categories;
     @DocumentReference
+    @ReadOnlyProperty
     private List<Advertisement> advertisements;
+    @DocumentReference
+    @ReadOnlyProperty
+    private List<Order> orders;
 }

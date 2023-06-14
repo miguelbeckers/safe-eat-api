@@ -1,10 +1,11 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.ExceptionConstants;
-import ipb.pt.safeeat.model.User;
+import ipb.pt.safeeat.constants.UserConstants;
+import ipb.pt.safeeat.model.*;
 import ipb.pt.safeeat.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,20 +24,17 @@ public class UserService {
 
     public User findById(UUID id) {
         return userRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.USER_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
     }
 
     public User create(User user) {
+//        Cart cart = new Cart(user, );
         return userRepository.save(user);
-    }
-
-    public List<User> createMany(List<User> users) {
-        return userRepository.saveAll(users);
     }
 
     public User update(User user) {
         User old = userRepository.findById(user.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.USER_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         BeanUtils.copyProperties(user, old);
         return userRepository.save(user);

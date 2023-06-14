@@ -27,4 +27,7 @@ public class Product {
     private List<Category> categories;
     @DocumentReference
     private List<Ingredient> ingredients;
+    @NotEmpty(message = "invalid restaurant")
+    @DocumentReference
+    private Restaurant restaurant;
 }

@@ -37,11 +37,6 @@ public class HomeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(homeService.create(home));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Home> homes) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(homeService.createMany(homes));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Home home) {
         return ResponseEntity.ok().body(homeService.update(home));

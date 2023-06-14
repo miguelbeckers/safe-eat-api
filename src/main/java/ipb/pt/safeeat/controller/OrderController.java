@@ -37,11 +37,6 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.create(order));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Order> orders) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createMany(orders));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Order order) {
         return ResponseEntity.ok().body(orderService.update(order));

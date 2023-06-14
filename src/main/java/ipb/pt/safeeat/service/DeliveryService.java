@@ -1,8 +1,7 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.ExceptionConstants;
+import ipb.pt.safeeat.constants.DeliveryConstants;
 import ipb.pt.safeeat.model.Delivery;
-import ipb.pt.safeeat.model.Feedback;
 import ipb.pt.safeeat.repository.DeliveryRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +23,16 @@ public class DeliveryService {
 
     public Delivery findById(UUID id) {
         return deliveryRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.DELIVERY_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
     }
 
     public Delivery create(Delivery delivery) {
         return deliveryRepository.save(delivery);
     }
 
-    public List<Delivery> createMany(List<Delivery> deliveries) {
-        return deliveryRepository.saveAll(deliveries);
-    }
-
     public Delivery update(Delivery delivery) {
         Delivery old = deliveryRepository.findById(delivery.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.DELIVERY_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
 
         BeanUtils.copyProperties(delivery, old);
         return deliveryRepository.save(delivery);

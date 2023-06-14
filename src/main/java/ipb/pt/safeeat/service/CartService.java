@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.ExceptionConstants;
+import ipb.pt.safeeat.constants.CartConstants;
+import ipb.pt.safeeat.constants.RestaurantConstants;
 import ipb.pt.safeeat.model.Cart;
 import ipb.pt.safeeat.repository.CartRepository;
 import ipb.pt.safeeat.repository.RestaurantRepository;
@@ -27,34 +28,10 @@ public class CartService {
 
     public Cart findById(UUID id) {
         return cartRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.CART_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CartConstants.NOT_FOUND));
     }
 
-    public Cart create(Cart cart) {
-        restaurantRepository.findById(cart.getRestaurant().getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.RESTAURANT_NOT_FOUND));
-
-        return cartRepository.save(cart);
-    }
-
-    public List<Cart> createMany(List<Cart> carts) {
-        for (Cart cart : carts) {
-            restaurantRepository.findById(cart.getRestaurant().getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.RESTAURANT_NOT_FOUND));
-        }
-
-        return cartRepository.saveAll(carts);
-    }
-
-    public Cart update(Cart cart) {
-        Cart old = cartRepository.findById(cart.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.CART_NOT_FOUND));
-
-        BeanUtils.copyProperties(cart, old);
-        return cartRepository.save(cart);
-    }
-
-    public void delete(UUID id) {
-        cartRepository.deleteById(id);
-    }
+    //TODO: insert product
+    //TODO: remove product
+    //TODO: reset
 }

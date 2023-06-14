@@ -37,11 +37,6 @@ public class FeedbackController {
         return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.create(feedback));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Feedback> feedbacks) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.createMany(feedbacks));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Feedback feedback) {
         return ResponseEntity.ok().body(feedbackService.update(feedback));

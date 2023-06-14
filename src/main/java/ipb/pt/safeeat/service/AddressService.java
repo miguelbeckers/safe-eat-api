@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.ExceptionConstants;
+import ipb.pt.safeeat.constants.AddressConstants;
+import ipb.pt.safeeat.constants.UserConstants;
 import ipb.pt.safeeat.model.Address;
 import ipb.pt.safeeat.model.User;
 import ipb.pt.safeeat.repository.AddressRepository;
@@ -28,12 +29,12 @@ public class AddressService {
 
     public Address findById(UUID id) {
         return addressRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.ADDRESS_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
     }
 
     public Address create(Address address) {
         User user = userRepository.findById(address.getUser().getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.USER_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         Address created = addressRepository.save(address);
 
@@ -42,27 +43,9 @@ public class AddressService {
         return created;
     }
 
-    public List<Address> createMany(List<Address> addresses) {
-        for (Address address : addresses) {
-            User user = userRepository.findById(address.getUser().getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.USER_NOT_FOUND));
-            address.setUser(user);
-        }
-
-        List<Address> created = addressRepository.saveAll(addresses);
-
-        for (Address address : created) {
-            User user = address.getUser();
-            user.getAddress().add(address);
-            userRepository.save(user);
-        }
-
-        return created;
-    }
-
     public Address update(Address address) {
         Address old = addressRepository.findById(address.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.ADDRESS_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
 
         BeanUtils.copyProperties(address, old);
         return addressRepository.save(address);

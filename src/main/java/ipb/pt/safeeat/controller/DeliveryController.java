@@ -37,11 +37,6 @@ public class DeliveryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(deliveryService.create(delivery));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Delivery> deliveries) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(deliveryService.createMany(deliveries));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Delivery delivery) {
         return ResponseEntity.ok().body(deliveryService.update(delivery));

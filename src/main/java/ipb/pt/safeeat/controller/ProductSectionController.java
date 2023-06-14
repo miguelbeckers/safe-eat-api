@@ -37,11 +37,6 @@ public class ProductSectionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productSectionService.create(productSection));
     }
 
-    @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<ProductSection> productSections) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productSectionService.createMany(productSections));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody ProductSection productSection) {
         return ResponseEntity.ok().body(productSectionService.update(productSection));

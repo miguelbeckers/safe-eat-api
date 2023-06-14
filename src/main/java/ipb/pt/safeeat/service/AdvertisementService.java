@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.ExceptionConstants;
+import ipb.pt.safeeat.constants.AdvertisementConstants;
+import ipb.pt.safeeat.constants.RestaurantConstants;
 import ipb.pt.safeeat.model.Advertisement;
 import ipb.pt.safeeat.model.Restaurant;
 import ipb.pt.safeeat.repository.AdvertisementRepository;
@@ -28,41 +29,26 @@ public class AdvertisementService {
 
     public Advertisement findById(UUID id) {
         return advertisementRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.ADVERTISEMENT_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
     }
 
     public Advertisement create(Advertisement advertisement) {
         Restaurant restaurant = restaurantRepository.findById(advertisement.getRestaurant().getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.RESTAURANT_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
         Advertisement created = advertisementRepository.save(advertisement);
-
         restaurant.getAdvertisements().add(created);
         restaurantRepository.save(restaurant);
         return created;
     }
 
-    public List<Advertisement> createMany(List<Advertisement> advertisements) {
-        for (Advertisement advertisement : advertisements) {
-            Restaurant restaurant = restaurantRepository.findById(advertisement.getRestaurant().getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.RESTAURANT_NOT_FOUND));
-            advertisement.setRestaurant(restaurant);
-        }
-
-        List<Advertisement> created = advertisementRepository.saveAll(advertisements);
-
-        for (Advertisement advertisement : created) {
-            Restaurant restaurant = advertisement.getRestaurant();
-            restaurant.getAdvertisements().add(advertisement);
-            restaurantRepository.save(restaurant);
-        }
-
-        return created;
-    }
-
     public Advertisement update(Advertisement advertisement) {
         Advertisement old = advertisementRepository.findById(advertisement.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionConstants.ADVERTISEMENT_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
+
+        if(!advertisement.getRestaurant().equals(old.getRestaurant())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, RestaurantConstants.CHANGED);
+        }
 
         BeanUtils.copyProperties(advertisement, old);
         return advertisementRepository.save(advertisement);
