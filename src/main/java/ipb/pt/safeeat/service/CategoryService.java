@@ -38,6 +38,9 @@ public class CategoryService {
     }
 
     public void delete(String id) {
+        categoryRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
+                
         categoryRepository.deleteById(id);
     }
 }

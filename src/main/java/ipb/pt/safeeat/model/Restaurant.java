@@ -24,21 +24,17 @@ public class Restaurant {
     @NotEmpty(message = "invalid cover")
     private String cover;
     @DocumentReference
-    @ReadOnlyProperty
-    private Delivery delivery;
+    private User owner;
     @DocumentReference
-    @ReadOnlyProperty
+    private List<Delivery> deliveries;
+    @DocumentReference
     private List<Product> products;
     @DocumentReference
-    @ReadOnlyProperty
     private List<ProductSection> productSections;
     @DocumentReference
-    @ReadOnlyProperty
     private List<Category> categories;
     @DocumentReference
-    @ReadOnlyProperty
     private List<Advertisement> advertisements;
     @DocumentReference
-    @ReadOnlyProperty
     private List<Order> orders;
 }

@@ -1,5 +1,6 @@
 package ipb.pt.safeeat.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class Product {
     private String name;
     @NotEmpty(message = "invalid price")
     private Double price;
-    @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;
     @DocumentReference
     @NotEmpty(message = "invalid categories")

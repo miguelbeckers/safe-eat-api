@@ -54,6 +54,9 @@ public class FeedbackService {
     }
 
     public void delete(String id) {
+        feedbackRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, FeedbackConstants.NOT_FOUND));
+                
         feedbackRepository.deleteById(id);
     }
 }

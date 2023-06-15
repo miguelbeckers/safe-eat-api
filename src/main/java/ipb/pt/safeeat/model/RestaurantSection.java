@@ -1,5 +1,6 @@
 package ipb.pt.safeeat.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,5 @@ public class RestaurantSection {
     private String id;
     @NotEmpty(message = "invalid name")
     private String name;
-    @DocumentReference
     private List<Restaurant> restaurants;
 }

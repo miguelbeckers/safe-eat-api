@@ -46,6 +46,9 @@ public class AddressService {
     }
 
     public void delete(String id) {
+        addressRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
+
         addressRepository.deleteById(id);
     }
 }

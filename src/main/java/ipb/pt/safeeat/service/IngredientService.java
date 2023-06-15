@@ -55,6 +55,9 @@ public class IngredientService {
     }
 
     public void delete(String id) {
+        ingredientRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
+                
         ingredientRepository.deleteById(id);
     }
 }

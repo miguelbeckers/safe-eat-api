@@ -19,7 +19,6 @@ public class Feedback {
     private Integer rating;
     @NotEmpty(message = "invalid comment")
     private String comment;
-
     @NotEmpty(message = "invalid order")
     @DocumentReference
     private Order order;

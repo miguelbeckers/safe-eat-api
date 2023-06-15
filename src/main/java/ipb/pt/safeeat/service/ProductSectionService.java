@@ -54,6 +54,9 @@ public class ProductSectionService {
     }
 
     public void delete(String id) {
+        productSectionRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductSectionConstants.INVALID));
+                
         productSectionRepository.deleteById(id);
     }
 }

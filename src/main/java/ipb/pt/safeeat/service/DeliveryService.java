@@ -38,6 +38,9 @@ public class DeliveryService {
     }
 
     public void delete(String id) {
+        deliveryRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
+                
         deliveryRepository.deleteById(id);
     }
 }

@@ -96,6 +96,9 @@ public class OrderService {
     }
 
     public void delete(String id) {
+        orderRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
+                
         orderRepository.deleteById(id);
     }
 }
