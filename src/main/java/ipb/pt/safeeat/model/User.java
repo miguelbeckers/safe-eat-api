@@ -1,6 +1,5 @@
 package ipb.pt.safeeat.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -12,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -30,19 +28,14 @@ public class User {
     private String email;
     @NotEmpty(message = "invalid cellphone")
     private String cellphone;
-    @DocumentReference(lookup="{'restrictions':?#{#self._id} }")
-    @ReadOnlyProperty
+    @DocumentReference
     private List<Restriction> restrictions;
     @DocumentReference
-    @ReadOnlyProperty
     private List<Address> address;
     @DocumentReference
-    @ReadOnlyProperty
     private List<Payment> payments;
     @DocumentReference
-    @ReadOnlyProperty
     private List<Order> orders;
     @DocumentReference
-    @ReadOnlyProperty
     private Cart cart;
 }

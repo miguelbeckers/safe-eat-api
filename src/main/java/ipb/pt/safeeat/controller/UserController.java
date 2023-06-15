@@ -35,11 +35,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
     }
 
-    @PutMapping("/{id}/update-restrictions")
-    public ResponseEntity<Object> updateRestrictions(@RequestBody List<Restriction> restrictions, @PathVariable String id) {
-        return ResponseEntity.ok().body(userService.updateRestrictions(restrictions, id));
-    }
-
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody User user) {
         return ResponseEntity.ok().body(userService.update(user));

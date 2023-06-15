@@ -1,18 +1,15 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.RestrictionConstants;
 import ipb.pt.safeeat.constants.UserConstants;
-import ipb.pt.safeeat.model.*;
-import ipb.pt.safeeat.repository.CartRepository;
-import ipb.pt.safeeat.repository.RestrictionRepository;
-import ipb.pt.safeeat.repository.UserRepository;
+import ipb.pt.safeeat.model.Cart;
+import ipb.pt.safeeat.model.User;
+import ipb.pt.safeeat.repository.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +22,15 @@ public class UserService {
 
     @Autowired
     private RestrictionRepository restrictionRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -40,25 +46,17 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid password");
         }
 
-        Cart cart = cartRepository.save(new Cart());
-        user.setCart(cart);
-        return userRepository.save(user);
-    }
-
-    public User updateRestrictions(List<Restriction> restrictions, String id) {
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
-
-        List<Restriction> original = new ArrayList<>();
-
-        for (Restriction restriction : restrictions) {
-            Restriction foundRestriction = restrictionRepository.findById(restriction.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND));
-
-            original.add(foundRestriction);
+        if(user.getRestrictions().size() > 0){
+            System.out.println("ola");
         }
 
-        user.getRestrictions().addAll(original);
+//        restrictions;
+//        address;
+//        payments;
+//        orders;
+
+        Cart cart = cartRepository.save(new Cart());
+        user.setCart(cart);
         return userRepository.save(user);
     }
 
