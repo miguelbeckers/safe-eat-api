@@ -22,7 +22,6 @@ public class IngredientService {
     @Autowired
     private RestrictionRepository restrictionRepository;
 
-    //TODO change the isRestrict property according to the current user
     public List<Ingredient> getAll() {
         return ingredientRepository.findAll();
     }
@@ -33,21 +32,10 @@ public class IngredientService {
     }
 
     public Ingredient create(Ingredient ingredient) {
-        checkDependencies(ingredient);
-
-        return ingredientRepository.save(ingredient);
-    }
-
-    private void checkDependencies(Ingredient ingredient) {
         for(Restriction restriction : ingredient.getRestrictions()) {
             restrictionRepository.findById(restriction.getId()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
         }
-
-//        private String name;
-//        private String description;
-//        private List<Restriction> restrictions;
-//        private Boolean isRestricted;
 
         return ingredientRepository.save(ingredient);
     }
@@ -56,7 +44,6 @@ public class IngredientService {
         Ingredient old = ingredientRepository.findById(ingredient.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
 
-        checkDependencies(ingredient);
         BeanUtils.copyProperties(ingredient, old);
         return ingredientRepository.save(ingredient);
     }
