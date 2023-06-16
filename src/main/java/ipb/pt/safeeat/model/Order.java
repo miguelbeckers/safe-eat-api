@@ -19,7 +19,7 @@ import java.util.List;
 public class Order {
     @Id
     private String id;
-    @NotEmpty(message = "Invalid status")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String status;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime time;

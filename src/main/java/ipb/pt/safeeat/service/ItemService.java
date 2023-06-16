@@ -2,10 +2,8 @@ package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.CartConstants;
 import ipb.pt.safeeat.constants.ItemConstants;
-import ipb.pt.safeeat.constants.ItemConstants;
 import ipb.pt.safeeat.constants.ProductConstants;
 import ipb.pt.safeeat.model.Cart;
-import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.model.Product;
 import ipb.pt.safeeat.repository.CartRepository;

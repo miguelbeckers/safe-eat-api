@@ -1,10 +1,7 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.*;
-import ipb.pt.safeeat.model.Item;
-import ipb.pt.safeeat.model.Order;
-import ipb.pt.safeeat.model.Restaurant;
-import ipb.pt.safeeat.model.User;
+import ipb.pt.safeeat.model.*;
 import ipb.pt.safeeat.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,30 +42,25 @@ public class OrderService {
     }
 
     public Order create(Order order) {
-        if(order.getFeedback() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Feedbacks are not accepted. User create feedback endpoint instead.");
-        }
-
-        addressRepository.findById(order.getAddress().getId()).orElseThrow(
+        Address address = addressRepository.findById(order.getAddress().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
 
-        paymentRepository.findById(order.getPayment().getId()).orElseThrow(
+        Payment payment = paymentRepository.findById(order.getPayment().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, PaymentConstants.NOT_FOUND));
 
-        deliveryRepository.findById(order.getDelivery().getId()).orElseThrow(
+        Delivery delivery = deliveryRepository.findById(order.getDelivery().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
-
-        for(Item item : order.getItems()) {
-            productRepository.findById(item.getProduct().getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
-        }
 
         Restaurant restaurant = restaurantRepository.findById(order.getRestaurant().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
         User client = userRepository.findById(order.getClient().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
+
+        for(Item item : order.getItems()) {
+            productRepository.findById(item.getProduct().getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
+        }
 
         double subtotal = order.getItems().stream().mapToDouble(Item::getSubtotal).sum();
         double total = subtotal + order.getDelivery().getPrice();
@@ -77,6 +69,9 @@ public class OrderService {
         order.setTime(LocalDateTime.now());
         order.setSubtotal(subtotal);
         order.setTotal(total);
+        order.setAddress(address);
+        order.setPayment(payment);
+        order.setDelivery(delivery);
 
         Order created = orderRepository.save(order);
 
