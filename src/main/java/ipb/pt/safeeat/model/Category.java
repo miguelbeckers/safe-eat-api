@@ -12,8 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Category {
     @Id
     private String id;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid image")
+    @NotEmpty(message = "Invalid image")
     private String image;
 }

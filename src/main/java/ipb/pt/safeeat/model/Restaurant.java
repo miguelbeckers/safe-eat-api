@@ -2,6 +2,7 @@ package ipb.pt.safeeat.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -16,25 +17,31 @@ import java.util.List;
 public class Restaurant {
     @Id
     private String id;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid logo")
+    @NotEmpty(message = "Invalid logo")
     private String logo;
-    @NotEmpty(message = "invalid cover")
+    @NotEmpty(message = "Invalid cover")
     private String cover;
-    @DocumentReference
-    private List<Delivery> deliveries;
-    @DocumentReference
-    private List<Product> products;
-    @DocumentReference
-    private List<ProductSection> productSections;
     @DocumentReference
     private List<Category> categories;
     @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<Delivery> deliveries;
+    @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<Product> products;
+    @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<ProductSection> productSections;
+    @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Advertisement> advertisements;
     @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Order> orders;
     @DocumentReference
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull(message = "Invalid cover")
     private User owner;
 }

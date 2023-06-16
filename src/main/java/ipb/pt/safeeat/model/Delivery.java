@@ -14,12 +14,12 @@ import java.time.LocalTime;
 public class Delivery {
     @Id
     private String id;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid price")
+    @NotEmpty(message = "Invalid price")
     private Double price;
-    @NotEmpty(message = "invalid startTime")
+    @NotEmpty(message = "Invalid startTime")
     private LocalTime startTime;
-    @NotEmpty(message = "invalid endTime")
+    @NotEmpty(message = "Invalid endTime")
     private LocalTime endTime;
 }

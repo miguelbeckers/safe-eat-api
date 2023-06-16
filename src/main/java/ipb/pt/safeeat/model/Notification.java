@@ -2,6 +2,7 @@ package ipb.pt.safeeat.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -16,11 +17,11 @@ import java.time.LocalDateTime;
 public class Notification {
     @Id
     private String id;
-    @NotEmpty(message = "invalid title")
+    @NotEmpty(message = "Invalid title")
     private String title;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime time;
     @DocumentReference
-    @NotEmpty(message = "invalid order")
+    @NotNull(message = "Invalid order")
     private Order order;
 }

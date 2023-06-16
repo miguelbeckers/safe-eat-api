@@ -2,6 +2,7 @@ package ipb.pt.safeeat.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -15,16 +16,16 @@ import java.util.List;
 public class Product {
     @Id
     private String id;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid price")
+    @NotNull(message = "Invalid price")
     private Double price;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;
     @DocumentReference
-    @NotEmpty(message = "invalid categories")
+    @NotNull(message = "Invalid categories")
     private List<Category> categories;
     @DocumentReference
-    @NotEmpty(message = "invalid ingredients")
+    @NotNull(message = "Invalid ingredients")
     private List<Ingredient> ingredients;
 }

@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.model;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -14,14 +15,15 @@ import java.time.YearMonth;
 public class Payment {
     @Id
     private String id;
-    @NotEmpty(message = "invalid type")
+    @NotEmpty(message = "Invalid type")
     private String type;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid number")
+    @NotNull(message = "Invalid number")
     private Integer number;
-    @NotEmpty(message = "invalid expirationDate")
-    private YearMonth expirationDate;
-    @NotEmpty(message = "invalid ccv")
-    private String cvv;
+    @NotEmpty(message = "Invalid expirationDate")
+    private String expirationDate;
+    // FIXME: expirationDate should be YearMonth type but it's not compatible with mongodb
+    @NotNull(message = "Invalid ccv")
+    private Integer cvv;
 }

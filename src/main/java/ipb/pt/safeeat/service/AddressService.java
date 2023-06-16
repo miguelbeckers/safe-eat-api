@@ -2,6 +2,7 @@ package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.AddressConstants;
 import ipb.pt.safeeat.model.Address;
+import ipb.pt.safeeat.model.User;
 import ipb.pt.safeeat.repository.AddressRepository;
 import ipb.pt.safeeat.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
@@ -28,8 +29,13 @@ public class AddressService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
     }
 
-    public Address create(Address address) {
+    public Address create(Address address, String userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
+
         Address created = addressRepository.save(address);
+        user.getAddress().add(created);
+        userRepository.save(user);
 
         return created;
     }

@@ -2,6 +2,7 @@ package ipb.pt.safeeat.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Order {
     @Id
     private String id;
-    @NotEmpty(message = "invalid status")
+    @NotEmpty(message = "Invalid status")
     private String status;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime time;
@@ -28,20 +29,21 @@ public class Order {
     private Double total = 0.0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer quantity = 0;
-    @NotEmpty(message = "invalid address")
+    @NotNull(message = "Invalid address")
     private Address address;
-    @NotEmpty(message = "invalid payment")
+    @NotNull(message = "Invalid payment")
     private Payment payment;
-    @NotEmpty(message = "invalid delivery")
+    @NotNull(message = "Invalid delivery")
     private Delivery delivery;
-    @NotEmpty(message = "invalid items")
+    @NotNull(message = "Invalid items")
     private List<Item> items;
     @DocumentReference
-    @NotEmpty(message = "invalid restaurant")
+    @NotNull(message = "Invalid restaurant")
     private Restaurant restaurant;
     @DocumentReference
-    @NotEmpty(message = "invalid client")
+    @NotNull(message = "Invalid client")
     private User client;
     @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Feedback feedback;
 }

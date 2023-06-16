@@ -49,36 +49,6 @@ public class RestaurantService {
     }
 
     public Restaurant create(Restaurant restaurant) {
-        if(restaurant.getOwner() == null || restaurant.getOwner().getId() == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "The owner is required.");
-        }
-
-        if(restaurant.getDeliveries() != null && !restaurant.getDeliveries().isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Deliveries are not accepted. Use create delivery instead.");
-        }
-
-        if(restaurant.getProducts() != null && !restaurant.getProducts().isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Products are not accepted. Use create product instead.");
-        }
-
-        if(restaurant.getProductSections() != null && !restaurant.getProductSections().isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Product sections are not accepted. Use create product section instead.");
-        }
-
-        if(restaurant.getAdvertisements() != null && !restaurant.getAdvertisements().isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Advertisements are not accepted. Use create advertisement instead.");
-        }
-
-        if(restaurant.getOrders() != null && !restaurant.getOrders().isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Orders are not accepted. Use create order instead.");
-        }
-
         if(restaurant.getCategories() != null && !restaurant.getCategories().isEmpty()) {
             for (Category category : restaurant.getCategories()) {
                 categoryRepository.findById(category.getId()).orElseThrow(

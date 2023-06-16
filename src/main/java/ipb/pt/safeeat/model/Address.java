@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.model;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -12,18 +13,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Address {
     @Id
     private String id;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid isDefault")
+    @NotNull(message = "Invalid isDefault")
     private Boolean isDefault;
-    @NotEmpty(message = "invalid street")
+    @NotEmpty(message = "Invalid street")
     private String street;
-    @NotEmpty(message = "invalid number")
+    @NotEmpty(message = "Invalid number")
     private String number;
-    @NotEmpty(message = "invalid complement")
+    @NotEmpty(message = "Invalid complement")
     private String complement;
-    @NotEmpty(message = "invalid city")
+    @NotEmpty(message = "Invalid city")
     private String city;
-    @NotEmpty(message = "invalid postalCode")
+    @NotEmpty(message = "Invalid postalCode")
     private String postalCode;
 }

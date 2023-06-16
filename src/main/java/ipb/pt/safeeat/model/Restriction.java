@@ -14,9 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Restriction {
     @Id
     private String id;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid description")
+    @NotEmpty(message = "Invalid description")
     private String description;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;

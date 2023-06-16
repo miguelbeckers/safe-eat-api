@@ -40,27 +40,7 @@ public class UserService {
                     "Invalid password");
         }
 
-        if (user.getAddress() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Addresses are not accepted. Use create address instead.");
-        }
-
-        if (user.getPayments() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Payments are not accepted. Use create payment instead.");
-        }
-
-        if (user.getOrders() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Orders are not accepted. Use create order instead.");
-        }
-
-        if (user.getRestaurants() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Restaurants are not accepted. Use create restaurant instead.");
-        }
-
-        if (user.getRestrictions() != null) {
+        if (user.getRestrictions() != null && !user.getRestrictions().isEmpty()) {
             for (Restriction restriction : user.getRestrictions()) {
                 restrictionRepository.findById(restriction.getId()).orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND));

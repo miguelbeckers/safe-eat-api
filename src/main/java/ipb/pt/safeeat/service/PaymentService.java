@@ -2,7 +2,9 @@ package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.PaymentConstants;
 import ipb.pt.safeeat.model.Payment;
+import ipb.pt.safeeat.model.User;
 import ipb.pt.safeeat.repository.PaymentRepository;
+import ipb.pt.safeeat.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ public class PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     public List<Payment> getAll() {
         return paymentRepository.findAll();
     }
@@ -25,8 +30,15 @@ public class PaymentService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, PaymentConstants.NOT_FOUND));
     }
 
-    public Payment create(Payment payment) {
-        return paymentRepository.save(payment);
+    public Payment create(Payment payment, String userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, PaymentConstants.NOT_FOUND));
+
+        Payment created = paymentRepository.save(payment);
+
+        user.getPayments().add(created);
+        userRepository.save(user);
+        return created;
     }
 
     public Payment update(Payment payment) {
@@ -40,7 +52,7 @@ public class PaymentService {
     public void delete(String id) {
         paymentRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, PaymentConstants.NOT_FOUND));
-                
+
         paymentRepository.deleteById(id);
     }
 }

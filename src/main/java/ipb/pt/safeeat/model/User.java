@@ -19,23 +19,27 @@ public class User {
     private String id;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @NotEmpty(message = "invalid image")
+    @NotEmpty(message = "Invalid image")
     private String image;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid email")
+    @NotEmpty(message = "Invalid email")
     private String email;
-    @NotEmpty(message = "invalid cellphone")
+    @NotEmpty(message = "Invalid cellphone")
     private String cellphone;
     @DocumentReference
     private List<Restriction> restrictions;
     @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Address> address;
     @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Payment> payments;
     @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Order> orders;
     @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Cart cart;
     @JsonIgnore
     @DocumentReference

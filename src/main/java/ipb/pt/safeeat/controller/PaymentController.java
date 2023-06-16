@@ -28,8 +28,8 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody Payment payment) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.create(payment));
+    public ResponseEntity<Object> create(@Valid @RequestBody Payment payment, @RequestParam String userId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.create(payment, userId));
     }
 
     @PutMapping

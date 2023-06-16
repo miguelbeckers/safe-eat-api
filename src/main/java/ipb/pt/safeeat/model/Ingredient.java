@@ -16,9 +16,9 @@ import java.util.List;
 public class Ingredient {
     @Id
     private String id;
-    @NotEmpty(message = "invalid name")
+    @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "invalid description")
+    @NotEmpty(message = "Invalid description")
     private String description;
     @DocumentReference
     private List<Restriction> restrictions;

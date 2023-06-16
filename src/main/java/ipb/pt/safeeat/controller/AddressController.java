@@ -32,8 +32,8 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody Address address) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.create(address));
+    public ResponseEntity<Object> create(@Valid @RequestBody Address address, @RequestParam String userId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.create(address, userId));
     }
 
     @PutMapping

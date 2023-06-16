@@ -13,11 +13,11 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 public class Feedback {
     @Id
     private String id;
-    @NotEmpty(message = "invalid rating")
+    @NotEmpty(message = "Invalid rating")
     private Integer rating;
-    @NotEmpty(message = "invalid comment")
+    @NotEmpty(message = "Invalid comment")
     private String comment;
-    @NotEmpty(message = "invalid order")
+    @NotEmpty(message = "Invalid order")
     @DocumentReference
     private Order order;
 }
