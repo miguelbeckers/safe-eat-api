@@ -27,4 +27,10 @@ public class ItemService {
         return itemRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
     }
+
+    // TODO: add methods
+
+//    private Product product;
+//    private Integer quantity;
+//    private Double subtotal;
 }

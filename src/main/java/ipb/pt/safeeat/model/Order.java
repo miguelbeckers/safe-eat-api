@@ -1,5 +1,6 @@
 package ipb.pt.safeeat.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +20,13 @@ public class Order {
     private String id;
     @NotEmpty(message = "invalid status")
     private String status;
-    @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime time;
-    @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double subtotal;
-    @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double total;
-    @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer quantity;
     @NotEmpty(message = "invalid address")
     private Address address;

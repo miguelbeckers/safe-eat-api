@@ -35,6 +35,11 @@ public class IngredientService {
     public Ingredient create(Ingredient ingredient) {
         checkDependencies(ingredient);
 
+//        private String name;
+//        private String description;
+//        private List<Restriction> restrictions;
+//        private Boolean isRestricted;
+
         return ingredientRepository.save(ingredient);
     }
 

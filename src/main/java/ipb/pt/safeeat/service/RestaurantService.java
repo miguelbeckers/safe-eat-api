@@ -117,6 +117,8 @@ public class RestaurantService {
             advertisementRepository.deleteById(advertisement.getId());
         }
 
+        //TODO: delete the restaurant form all the restaurant sections
+
         restaurantRepository.deleteById(id);
     }
 }
