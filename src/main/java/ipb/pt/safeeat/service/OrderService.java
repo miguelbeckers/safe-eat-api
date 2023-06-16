@@ -78,6 +78,18 @@ public class OrderService {
         restaurant.getOrders().add(created);
         restaurantRepository.save(restaurant);
         return created;
+
+//        private String status;
+//        private LocalDateTime time;
+//        private Double subtotal;
+//        private Double total;
+//        private Integer quantity;
+//        private Address address;
+//        private Payment payment;
+//        private List<Item> items;
+//        private Delivery delivery;
+//        private Restaurant restaurant;
+//        private Feedback feedback;
     }
 
     public Order update(Order order) {

@@ -35,6 +35,10 @@ public class NotificationService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
 
         return notificationRepository.save(notification);
+
+//        private String title;
+//        private LocalDateTime time;
+//        private Order order;
     }
 
     public Notification update(Notification notification) {

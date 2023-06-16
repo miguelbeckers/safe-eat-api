@@ -32,8 +32,6 @@ public class AddressService {
     public Address create(Address address) {
         Address created = addressRepository.save(address);
 
-//        user.getAddress().add(created);
-//        userRepository.save(user);
         return created;
     }
 

@@ -45,6 +45,10 @@ public class ProductService {
         restaurant.getProducts().add(created);
         restaurantRepository.save(restaurant);
 
+//        private List<Category> categories;
+//        private List<Ingredient> ingredients;
+//        private Restaurant restaurant;
+
         return created;
     }
 
