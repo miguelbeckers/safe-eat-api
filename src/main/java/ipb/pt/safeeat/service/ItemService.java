@@ -1,9 +1,12 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.ItemConstants;
+import ipb.pt.safeeat.constants.ItemConstants;
+import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.repository.ItemRepository;
 import ipb.pt.safeeat.repository.ProductRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,27 @@ public class ItemService {
     public Item findById(String id) {
         return itemRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
+    }
+
+    public Item create(Item item) {
+        Item created = itemRepository.save(item);
+
+        return created;
+    }
+
+    public Item update(Item item) {
+        Item old = itemRepository.findById(item.getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
+
+        BeanUtils.copyProperties(item, old);
+        return itemRepository.save(item);
+    }
+
+    public void delete(String id) {
+        itemRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
+
+        itemRepository.deleteById(id);
     }
 
     // TODO: add methods

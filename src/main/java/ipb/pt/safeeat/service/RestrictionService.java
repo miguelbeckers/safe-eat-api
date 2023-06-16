@@ -42,8 +42,5 @@ public class RestrictionService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
         restrictionRepository.deleteById(id);
-
-        //TODO: remove the restriction from all the users
-        //TODO: remove the restriction from all the ingredients
     }
 }

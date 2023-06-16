@@ -48,7 +48,6 @@ public class OrderService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
     }
 
-    // TODO the dependencies should be embedded in an order and not being linked to the current objects
     public Order create(Order order) {
         addressRepository.findById(order.getAddress().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));

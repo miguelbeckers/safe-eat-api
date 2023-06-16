@@ -45,10 +45,6 @@ public class NotificationService {
         Notification old = notificationRepository.findById(notification.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, NotificationConstants.NOT_FOUND));
 
-        if(!notification.getOrder().equals(old.getOrder())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.CHANGED);
-        }
-
         BeanUtils.copyProperties(notification, old);
         return notificationRepository.save(notification);
     }

@@ -32,23 +32,18 @@ public class ProductSectionService {
     }
 
     public ProductSection create(ProductSection productSection) {
-        checkDependencies(productSection);
-
-        return productSectionRepository.save(productSection);
-    }
-
-    private void checkDependencies(ProductSection productSection) {
         for(Product product : productSection.getProducts()) {
             productRepository.findById(product.getId()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
         }
+
+        return productSectionRepository.save(productSection);
     }
 
     public ProductSection update(ProductSection productSection) {
         ProductSection old = productSectionRepository.findById(productSection.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductSectionConstants.NOT_FOUND));
 
-        checkDependencies(productSection);
         BeanUtils.copyProperties(productSection, old);
         return productSectionRepository.save(productSection);
     }

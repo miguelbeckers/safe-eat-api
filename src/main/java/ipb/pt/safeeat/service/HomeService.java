@@ -38,11 +38,6 @@ public class HomeService {
     }
 
     public Home create(Home home) {
-        checkDependencies(home);
-        return homeRepository.save(home);
-    }
-
-    private void checkDependencies(Home home) {
         for(Object content: home.getContent()){
             if(content instanceof RestaurantSection){
                 restaurantSectionRepository.findById(((RestaurantSection) content).getId()).orElseThrow(
@@ -54,13 +49,13 @@ public class HomeService {
             }
             else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid content");
         }
+        return homeRepository.save(home);
     }
 
     public Home update(Home home) {
         Home old = homeRepository.findById(home.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, HomeConstants.NOT_FOUND));
 
-        checkDependencies(home);
         BeanUtils.copyProperties(home, old);
         return homeRepository.save(home);
     }
@@ -71,6 +66,4 @@ public class HomeService {
                 
         homeRepository.deleteById(id);
     }
-
-
 }

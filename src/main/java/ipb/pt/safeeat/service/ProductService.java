@@ -25,7 +25,6 @@ public class ProductService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    //TODO change the isRestrict property according to the current user
     public List<Product> getAll() {
         return productRepository.findAll();
     }
@@ -36,7 +35,15 @@ public class ProductService {
     }
 
     public Product create(Product product) {
-        checkDependencies(product);
+        for(Ingredient ingredient : product.getIngredients()) {
+            ingredientRepository.findById(ingredient.getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
+        }
+
+        for(Category category : product.getCategories()) {
+            categoryRepository.findById(category.getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
+        }
 
         Restaurant restaurant = restaurantRepository.findById(product.getRestaurant().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
@@ -52,27 +59,10 @@ public class ProductService {
         return created;
     }
 
-    private void checkDependencies(Product product) {
-        for(Ingredient ingredient : product.getIngredients()) {
-            ingredientRepository.findById(ingredient.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
-        }
-
-        for(Category category : product.getCategories()) {
-            categoryRepository.findById(category.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
-        }
-    }
-
     public Product update(Product product) {
         Product old = productRepository.findById(product.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
 
-        if(!product.getRestaurant().equals(old.getRestaurant())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, RestaurantConstants.CHANGED);
-        }
-
-        checkDependencies(product);
         BeanUtils.copyProperties(product, old);
         return productRepository.save(product);
     }

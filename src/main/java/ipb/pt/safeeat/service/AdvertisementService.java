@@ -45,10 +45,6 @@ public class AdvertisementService {
         Advertisement old = advertisementRepository.findById(advertisement.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
 
-        if(!advertisement.getRestaurant().equals(old.getRestaurant())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, RestaurantConstants.CHANGED);
-        }
-
         BeanUtils.copyProperties(advertisement, old);
         return advertisementRepository.save(advertisement);
     }

@@ -32,22 +32,13 @@ public class RestaurantSectionService {
     }
 
     public RestaurantSection create(RestaurantSection restaurantSection) {
-        checkDependencies(restaurantSection);
         return restaurantSectionRepository.save(restaurantSection);
-    }
-
-    private void checkDependencies(RestaurantSection restaurantSection) {
-        for(Restaurant restaurant: restaurantSection.getRestaurants()){
-            restaurantRepository.findById(restaurant.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
-        }
     }
 
     public RestaurantSection update(RestaurantSection restaurantSection) {
         RestaurantSection old = restaurantSectionRepository.findById(restaurantSection.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantSectionConstants.NOT_FOUND));
 
-        checkDependencies(restaurantSection);
         BeanUtils.copyProperties(restaurantSection, old);
         return restaurantSectionRepository.save(restaurantSection);
     }

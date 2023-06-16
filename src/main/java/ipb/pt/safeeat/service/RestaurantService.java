@@ -64,7 +64,10 @@ public class RestaurantService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.NOT_ACCEPTED);
         }
 
-        checkDependencies(restaurant);
+        for(Category category: restaurant.getCategories()) {
+            categoryRepository.findById(category.getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
+        }
 
         User owner = userRepository.findById(restaurant.getOwner().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
@@ -76,48 +79,17 @@ public class RestaurantService {
         return created;
     }
 
-    private void checkDependencies(Restaurant restaurant) {
-        for(Category category: restaurant.getCategories()) {
-            categoryRepository.findById(category.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
-        }
-    }
-
     public Restaurant update(Restaurant restaurant) {
         Restaurant old = restaurantRepository.findById(restaurant.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
-
-        if(old.getOwner() != restaurant.getOwner()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, UserConstants.CHANGED);
-        }
-
-        checkDependencies(restaurant);
 
         BeanUtils.copyProperties(restaurant, old);
         return restaurantRepository.save(restaurant);
     }
 
     public void delete(String id) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(
+        restaurantRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
-
-        for(Delivery delivery : restaurant.getDeliveries()) {
-            deliveryRepository.deleteById(delivery.getId());
-        }
-
-        for(Product product : restaurant.getProducts()) {
-            productRepository.deleteById(product.getId());
-        }
-
-        for(ProductSection productSection : restaurant.getProductSections()) {
-            productSectionRepository.deleteById(productSection.getId());
-        }
-
-        for(Advertisement advertisement : restaurant.getAdvertisements()) {
-            advertisementRepository.deleteById(advertisement.getId());
-        }
-
-        //TODO: delete the restaurant form all the restaurant sections
 
         restaurantRepository.deleteById(id);
     }

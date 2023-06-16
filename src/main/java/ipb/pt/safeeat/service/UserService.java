@@ -19,21 +19,12 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private CartRepository cartRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
-
     @Autowired
     private RestrictionRepository restrictionRepository;
-
     @Autowired
     private PaymentRepository paymentRepository;
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -61,7 +52,12 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.NOT_ACCEPTED);
         }
 
-        checkDependencies(user);
+        if (user.getRestrictions() != null) {
+            for (Restriction restriction : user.getRestrictions()) {
+                restrictionRepository.findById(restriction.getId()).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND));
+            }
+        }
 
         Cart cart = cartRepository.save(new Cart());
         user.setCart(cart);
@@ -69,22 +65,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    private void checkDependencies(User user) {
-        if (user.getRestrictions() != null) {
-            for (Restriction restriction : user.getRestrictions()) {
-                restrictionRepository.findById(restriction.getId()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND));
-            }
-        }
-    }
-
     public User update(User user) {
-        //TODO: can we update everything, or only the basic fields?
-
         User old = userRepository.findById(user.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
-
-        checkDependencies(user);
 
         BeanUtils.copyProperties(user, old);
         return userRepository.save(user);
@@ -94,17 +77,6 @@ public class UserService {
         userRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
-        for(Address address: userRepository.findById(id).get().getAddress()) {
-            addressRepository.deleteById(address.getId());
-        }
-
-        for(Payment payment: userRepository.findById(id).get().getPayments()) {
-            paymentRepository.deleteById(payment.getId());
-        }
-
-        cartRepository.deleteById(userRepository.findById(id).get().getCart().getId());
         userRepository.deleteById(id);
-
-        //TODO: delete all the restaurants that the user owns
     }
 }

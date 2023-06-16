@@ -45,10 +45,6 @@ public class FeedbackService {
         Feedback old = feedbackRepository.findById(feedback.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, FeedbackConstants.NOT_FOUND));
 
-        if(!feedback.getOrder().equals(old.getOrder())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.CHANGED);
-        }
-
         BeanUtils.copyProperties(feedback, old);
         return feedbackRepository.save(feedback);
     }
