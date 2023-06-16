@@ -18,7 +18,6 @@ import java.util.List;
 public class RestaurantSectionService {
     @Autowired
     private RestaurantSectionRepository restaurantSectionRepository;
-
     @Autowired
     private RestaurantRepository restaurantRepository;
 

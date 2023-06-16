@@ -16,7 +16,6 @@ import java.util.List;
 public class CartService {
     @Autowired
     private CartRepository cartRepository;
-
     @Autowired
     private RestaurantRepository restaurantRepository;
 

@@ -18,7 +18,6 @@ import java.util.List;
 public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
-
     @Autowired
     private ProductRepository productRepository;
 

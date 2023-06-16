@@ -18,7 +18,6 @@ import java.util.List;
 public class IngredientService {
     @Autowired
     private IngredientRepository ingredientRepository;
-
     @Autowired
     private RestrictionRepository restrictionRepository;
 

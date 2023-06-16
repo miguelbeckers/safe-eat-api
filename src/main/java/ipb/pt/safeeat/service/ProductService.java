@@ -15,13 +15,10 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private IngredientRepository ingredientRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private RestaurantRepository restaurantRepository;
 

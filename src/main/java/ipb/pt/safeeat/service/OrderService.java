@@ -17,25 +17,18 @@ import java.util.List;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private AddressRepository addressRepository;
-
     @Autowired
     private PaymentRepository paymentRepository;
-
     @Autowired
     private ItemRepository itemRepository;
-
     @Autowired
     private RestaurantRepository restaurantRepository;
-
     @Autowired
     private DeliveryRepository deliveryRepository;
-
     @Autowired
     private FeedbackRepository feedbackRepository;
-
     @Autowired
     private ProductRepository productRepository;
 

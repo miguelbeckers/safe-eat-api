@@ -18,7 +18,6 @@ import java.util.List;
 public class ProductSectionService {
     @Autowired
     private ProductSectionRepository productSectionRepository;
-
     @Autowired
     private ProductRepository productRepository;
 

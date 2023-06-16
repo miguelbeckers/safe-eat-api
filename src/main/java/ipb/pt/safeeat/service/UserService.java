@@ -25,7 +25,6 @@ public class UserService {
     private RestrictionRepository restrictionRepository;
     @Autowired
     private PaymentRepository paymentRepository;
-
     @Autowired
     private RestaurantRepository restaurantRepository;
 

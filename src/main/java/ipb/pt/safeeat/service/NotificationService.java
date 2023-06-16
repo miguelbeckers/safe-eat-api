@@ -17,7 +17,6 @@ import java.util.List;
 public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
-
     @Autowired
     private OrderRepository orderRepository;
 

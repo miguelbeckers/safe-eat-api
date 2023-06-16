@@ -18,7 +18,6 @@ import java.util.List;
 public class AdvertisementService {
     @Autowired
     private AdvertisementRepository advertisementRepository;
-
     @Autowired
     private RestaurantRepository restaurantRepository;
 

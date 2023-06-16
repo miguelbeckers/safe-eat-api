@@ -21,10 +21,8 @@ import java.util.List;
 public class HomeService {
     @Autowired
     private HomeRepository homeRepository;
-
     @Autowired
     private RestaurantSectionRepository restaurantSectionRepository;
-
     @Autowired
     private AdvertisementRepository advertisementRepository;
 

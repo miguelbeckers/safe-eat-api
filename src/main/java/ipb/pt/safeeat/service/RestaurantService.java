@@ -15,22 +15,16 @@ import java.util.List;
 public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
-
     @Autowired
     private DeliveryRepository deliveryRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private ProductSectionRepository productSectionRepository;
-
     @Autowired
     private AdvertisementRepository advertisementRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
 

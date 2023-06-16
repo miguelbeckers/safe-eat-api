@@ -16,7 +16,6 @@ import java.util.List;
 public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
-
     @Autowired
     private UserRepository userRepository;
 
