@@ -1,8 +1,8 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.*;
-import ipb.pt.safeeat.model.Restaurant;
-import ipb.pt.safeeat.repository.RestaurantRepository;
+import ipb.pt.safeeat.model.*;
+import ipb.pt.safeeat.repository.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,18 @@ import java.util.List;
 public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private DeliveryRepository deliveryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private ProductSectionRepository productSectionRepository;
+
+    @Autowired
+    private AdvertisementRepository advertisementRepository;
 
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll();
@@ -38,8 +50,24 @@ public class RestaurantService {
     }
 
     public void delete(String id) {
-        restaurantRepository.findById(id).orElseThrow(
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
+
+        for(Delivery delivery : restaurant.getDeliveries()) {
+            deliveryRepository.deleteById(delivery.getId());
+        }
+
+        for(Product product : restaurant.getProducts()) {
+            productRepository.deleteById(product.getId());
+        }
+
+        for(ProductSection productSection : restaurant.getProductSections()) {
+            productSectionRepository.deleteById(productSection.getId());
+        }
+
+        for(Advertisement advertisement : restaurant.getAdvertisements()) {
+            advertisementRepository.deleteById(advertisement.getId());
+        }
 
         restaurantRepository.deleteById(id);
     }

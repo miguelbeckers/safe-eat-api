@@ -8,8 +8,6 @@ import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @Document(collection = "items")

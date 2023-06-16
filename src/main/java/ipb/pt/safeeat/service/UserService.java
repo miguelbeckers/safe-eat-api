@@ -5,9 +5,7 @@ import ipb.pt.safeeat.constants.OrderConstants;
 import ipb.pt.safeeat.constants.PaymentConstants;
 import ipb.pt.safeeat.constants.RestrictionConstants;
 import ipb.pt.safeeat.constants.UserConstants;
-import ipb.pt.safeeat.model.Cart;
-import ipb.pt.safeeat.model.Restriction;
-import ipb.pt.safeeat.model.User;
+import ipb.pt.safeeat.model.*;
 import ipb.pt.safeeat.repository.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,13 @@ public class UserService {
     private CartRepository cartRepository;
 
     @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
     private RestrictionRepository restrictionRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -85,6 +89,15 @@ public class UserService {
         userRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
+        for(Address address: userRepository.findById(id).get().getAddress()) {
+            addressRepository.deleteById(address.getId());
+        }
+
+        for(Payment payment: userRepository.findById(id).get().getPayments()) {
+            paymentRepository.deleteById(payment.getId());
+        }
+
+        cartRepository.deleteById(userRepository.findById(id).get().getCart().getId());
         userRepository.deleteById(id);
     }
 }

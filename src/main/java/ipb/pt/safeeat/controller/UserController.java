@@ -1,6 +1,5 @@
 package ipb.pt.safeeat.controller;
 
-import ipb.pt.safeeat.model.Restriction;
 import ipb.pt.safeeat.model.User;
 import ipb.pt.safeeat.service.UserService;
 import jakarta.validation.Valid;
@@ -9,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @CrossOrigin
