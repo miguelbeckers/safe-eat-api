@@ -1,8 +1,6 @@
 package ipb.pt.safeeat.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -20,6 +18,6 @@ public class ProductSection {
     @NotEmpty(message = "Invalid name")
     private String name;
     @DocumentReference
-    @NotNull(message = "Invalid products")
+    @NotEmpty(message = "Invalid products")
     private List<Product> products;
 }

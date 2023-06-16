@@ -1,11 +1,14 @@
 package ipb.pt.safeeat.service;
 
+import ipb.pt.safeeat.constants.CartConstants;
 import ipb.pt.safeeat.constants.ItemConstants;
 import ipb.pt.safeeat.constants.ItemConstants;
 import ipb.pt.safeeat.constants.ProductConstants;
+import ipb.pt.safeeat.model.Cart;
 import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.model.Product;
+import ipb.pt.safeeat.repository.CartRepository;
 import ipb.pt.safeeat.repository.ItemRepository;
 import ipb.pt.safeeat.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +25,8 @@ public class ItemService {
     private ItemRepository itemRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
     public List<Item> getAll() {
         return itemRepository.findAll();
@@ -32,14 +37,22 @@ public class ItemService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
     }
 
-    public Item create(Item item) {
+    public Item create(Item item, String cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CartConstants.NOT_FOUND));
+
         Product product = productRepository.findById(item.getProduct().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
 
         double subtotal = product.getPrice() * item.getQuantity();
         item.setSubtotal(subtotal);
+        item.setProduct(product);
 
-        return itemRepository.save(item);
+        Item created = itemRepository.save(item);
+        cart.getItems().add(created);
+        cartRepository.save(cart);
+
+        return created;
     }
 
     public Item update(Item item) {

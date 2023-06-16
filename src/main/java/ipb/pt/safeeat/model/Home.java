@@ -1,6 +1,6 @@
 package ipb.pt.safeeat.model;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -16,6 +16,6 @@ public class Home {
     @Id
     private String id;
     @DocumentReference
-    @NotNull(message = "Invalid content")
+    @NotEmpty(message = "Invalid content")
     private List<Object> content;
 }

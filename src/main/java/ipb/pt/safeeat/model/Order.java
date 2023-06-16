@@ -35,7 +35,7 @@ public class Order {
     private Payment payment;
     @NotNull(message = "Invalid delivery")
     private Delivery delivery;
-    @NotNull(message = "Invalid items")
+    @NotEmpty(message = "Invalid items")
     private List<Item> items;
     @DocumentReference
     @NotNull(message = "Invalid restaurant")

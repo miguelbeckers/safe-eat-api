@@ -24,6 +24,7 @@ public class Restaurant {
     @NotEmpty(message = "Invalid cover")
     private String cover;
     @DocumentReference
+    @NotEmpty(message = "Invalid categories")
     private List<Category> categories;
     @DocumentReference
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

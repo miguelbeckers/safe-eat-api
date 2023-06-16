@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.model;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -16,10 +17,11 @@ public class Delivery {
     private String id;
     @NotEmpty(message = "Invalid name")
     private String name;
-    @NotEmpty(message = "Invalid price")
+    @NotNull(message = "Invalid price")
     private Double price;
     @NotEmpty(message = "Invalid startTime")
-    private LocalTime startTime;
+    private String startTime;
     @NotEmpty(message = "Invalid endTime")
-    private LocalTime endTime;
+    private String endTime;
+    // FIXME: startTime and endTime should be LocalTime type
 }

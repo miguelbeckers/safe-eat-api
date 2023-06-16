@@ -28,8 +28,8 @@ public class DeliveryController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody Delivery delivery) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(deliveryService.create(delivery));
+    public ResponseEntity<Object> create(@Valid @RequestBody Delivery delivery, @RequestParam String restaurantId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(deliveryService.create(delivery, restaurantId));
     }
 
     @PutMapping

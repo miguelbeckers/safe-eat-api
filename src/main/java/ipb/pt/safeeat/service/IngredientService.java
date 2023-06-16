@@ -31,9 +31,11 @@ public class IngredientService {
     }
 
     public Ingredient create(Ingredient ingredient) {
-        for(Restriction restriction : ingredient.getRestrictions()) {
-            restrictionRepository.findById(restriction.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
+        if(ingredient.getRestrictions() != null && !ingredient.getRestrictions().isEmpty()) {
+            for(Restriction restriction : ingredient.getRestrictions()) {
+                restrictionRepository.findById(restriction.getId()).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
+            }
         }
 
         return ingredientRepository.save(ingredient);

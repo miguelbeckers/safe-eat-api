@@ -2,7 +2,9 @@ package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.DeliveryConstants;
 import ipb.pt.safeeat.model.Delivery;
+import ipb.pt.safeeat.model.Restaurant;
 import ipb.pt.safeeat.repository.DeliveryRepository;
+import ipb.pt.safeeat.repository.RestaurantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ public class DeliveryService {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
     public List<Delivery> getAll() {
         return deliveryRepository.findAll();
     }
@@ -25,8 +30,15 @@ public class DeliveryService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
     }
 
-    public Delivery create(Delivery delivery) {
-        return deliveryRepository.save(delivery);
+    public Delivery create(Delivery delivery, String restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
+
+        Delivery created = deliveryRepository.save(delivery);
+        restaurant.getDeliveries().add(created);
+        restaurantRepository.save(restaurant);
+
+        return created;
     }
 
     public Delivery update(Delivery delivery) {

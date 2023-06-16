@@ -28,8 +28,8 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody Feedback feedback) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.create(feedback));
+    public ResponseEntity<Object> create(@Valid @RequestBody Feedback feedback, @RequestParam String orderId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.create(feedback, orderId));
     }
 
     @PutMapping

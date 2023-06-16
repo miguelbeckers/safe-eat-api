@@ -28,8 +28,8 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody Item item) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.create(item));
+    public ResponseEntity<Object> create(@Valid @RequestBody Item item, @RequestParam String cartId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.create(item, cartId));
     }
 
     @PutMapping

@@ -23,9 +23,9 @@ public class Product {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;
     @DocumentReference
-    @NotNull(message = "Invalid categories")
+    @NotEmpty(message = "Invalid categories")
     private List<Category> categories;
     @DocumentReference
-    @NotNull(message = "Invalid ingredients")
+    @NotEmpty(message = "Invalid ingredients")
     private List<Ingredient> ingredients;
 }

@@ -1,7 +1,6 @@
 package ipb.pt.safeeat.model;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -19,6 +18,6 @@ public class RestaurantSection {
     @NotEmpty(message = "Invalid name")
     private String name;
     @DocumentReference
-    @NotNull(message = "Invalid restaurants")
+    @NotEmpty(message = "Invalid restaurants")
     private List<Restaurant> restaurants;
 }

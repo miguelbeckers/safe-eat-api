@@ -19,7 +19,7 @@ public class Item {
     @DocumentReference
     @NotNull(message = "Invalid product")
     private Product product;
-    @NotEmpty(message = "Invalid quantity")
+    @NotNull(message = "Invalid quantity")
     private Integer quantity = 0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double subtotal = 0.0;

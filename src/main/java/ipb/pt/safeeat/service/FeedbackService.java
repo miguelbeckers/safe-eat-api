@@ -29,8 +29,8 @@ public class FeedbackService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, FeedbackConstants.NOT_FOUND));
     }
 
-    public Feedback create(Feedback feedback) {
-        Order order = orderRepository.findById(feedback.getOrder().getId()).orElseThrow(
+    public Feedback create(Feedback feedback, String orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
 
         Feedback created = feedbackRepository.save(feedback);
