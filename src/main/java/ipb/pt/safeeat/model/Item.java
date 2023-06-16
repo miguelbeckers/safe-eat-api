@@ -19,7 +19,7 @@ public class Item {
     @NotEmpty(message = "invalid product")
     private Product product;
     @NotEmpty(message = "invalid quantity")
-    private Integer quantity;
+    private Integer quantity = 0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Double subtotal;
+    private Double subtotal = 0.0;
 }

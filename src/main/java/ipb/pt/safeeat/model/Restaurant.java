@@ -1,5 +1,6 @@
 package ipb.pt.safeeat.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,6 @@ public class Restaurant {
     private String logo;
     @NotEmpty(message = "invalid cover")
     private String cover;
-    @NotEmpty(message = "invalid owner")
-    @DocumentReference
-    private User owner;
     @DocumentReference
     private List<Delivery> deliveries;
     @DocumentReference
@@ -36,4 +34,7 @@ public class Restaurant {
     private List<Advertisement> advertisements;
     @DocumentReference
     private List<Order> orders;
+    @DocumentReference
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private User owner;
 }

@@ -1,5 +1,6 @@
 package ipb.pt.safeeat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class User {
     private List<Order> orders;
     @DocumentReference
     private Cart cart;
+    @JsonIgnore
     @DocumentReference
     private List<Restaurant> restaurants;
 }

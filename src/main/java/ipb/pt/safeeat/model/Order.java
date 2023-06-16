@@ -23,11 +23,11 @@ public class Order {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime time;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Double subtotal;
+    private Double subtotal = 0.0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Double total;
+    private Double total = 0.0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Integer quantity;
+    private Integer quantity = 0;
     @NotEmpty(message = "invalid address")
     private Address address;
     @NotEmpty(message = "invalid payment")

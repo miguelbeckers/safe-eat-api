@@ -27,6 +27,11 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantService.findById(id));
     }
 
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<Object> findByOwner(@PathVariable String id) {
+        return ResponseEntity.ok(restaurantService.findByOwner(id));
+    }
+
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody Restaurant restaurant) {
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));

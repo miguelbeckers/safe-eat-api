@@ -16,9 +16,9 @@ public class Cart {
     @Id
     private String id;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Integer quantity;
+    private Integer quantity = 0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Double subtotal;
+    private Double subtotal = 0.0;
     @DocumentReference
     private List<Item> items;
 }

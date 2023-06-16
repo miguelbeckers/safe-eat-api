@@ -29,7 +29,11 @@ public class RestaurantService {
     private CategoryRepository categoryRepository;
 
     public List<Restaurant> getAll() {
-        return restaurantRepository.findAll();
+        try {
+            return restaurantRepository.findAll();
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     public Restaurant findById(String id) {
@@ -37,35 +41,49 @@ public class RestaurantService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
     }
 
+    public List<Restaurant> findByOwner(String id) {
+        User owner = userRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
+
+        return owner.getRestaurants();
+    }
+
     public Restaurant create(Restaurant restaurant) {
-        if(restaurant.getDeliveries() != null){
+        if(restaurant.getOwner() == null || restaurant.getOwner().getId() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The owner is required.");
+        }
+
+        if(restaurant.getDeliveries() != null && !restaurant.getDeliveries().isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Deliveries are not accepted. Use create delivery instead.");
         }
 
-        if(restaurant.getProducts() != null){
+        if(restaurant.getProducts() != null && !restaurant.getProducts().isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Products are not accepted. Use create product instead.");
         }
 
-        if(restaurant.getProductSections() != null){
+        if(restaurant.getProductSections() != null && !restaurant.getProductSections().isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Product sections are not accepted. Use create product section instead.");
         }
 
-        if(restaurant.getAdvertisements() != null){
+        if(restaurant.getAdvertisements() != null && !restaurant.getAdvertisements().isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Advertisements are not accepted. Use create advertisement instead.");
         }
 
-        if(restaurant.getOrders() != null){
+        if(restaurant.getOrders() != null && !restaurant.getOrders().isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Orders are not accepted. Use create order instead.");
         }
 
-        for(Category category: restaurant.getCategories()) {
-            categoryRepository.findById(category.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
+        if(restaurant.getCategories() != null && !restaurant.getCategories().isEmpty()) {
+            for (Category category : restaurant.getCategories()) {
+                categoryRepository.findById(category.getId()).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
+            }
         }
 
         User owner = userRepository.findById(restaurant.getOwner().getId()).orElseThrow(
