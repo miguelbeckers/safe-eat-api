@@ -39,23 +39,28 @@ public class RestaurantService {
 
     public Restaurant create(Restaurant restaurant) {
         if(restaurant.getDeliveries() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, RestaurantConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Deliveries are not accepted. Use create delivery instead.");
         }
 
         if(restaurant.getProducts() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ProductConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Products are not accepted. Use create product instead.");
         }
 
         if(restaurant.getProductSections() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, RestaurantSectionConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Product sections are not accepted. Use create product section instead.");
         }
 
         if(restaurant.getAdvertisements() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, AdvertisementConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Advertisements are not accepted. Use create advertisement instead.");
         }
 
         if(restaurant.getOrders() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Orders are not accepted. Use create order instead.");
         }
 
         for(Category category: restaurant.getCategories()) {

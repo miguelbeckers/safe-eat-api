@@ -47,6 +47,7 @@ public class HomeService {
             }
             else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid content");
         }
+
         return homeRepository.save(home);
     }
 

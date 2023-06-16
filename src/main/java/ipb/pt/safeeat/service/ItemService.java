@@ -2,8 +2,10 @@ package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.ItemConstants;
 import ipb.pt.safeeat.constants.ItemConstants;
+import ipb.pt.safeeat.constants.ProductConstants;
 import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.model.Item;
+import ipb.pt.safeeat.model.Product;
 import ipb.pt.safeeat.repository.ItemRepository;
 import ipb.pt.safeeat.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -31,9 +33,13 @@ public class ItemService {
     }
 
     public Item create(Item item) {
-        Item created = itemRepository.save(item);
+        Product product = productRepository.findById(item.getProduct().getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
 
-        return created;
+        double subtotal = product.getPrice() * item.getQuantity();
+        item.setSubtotal(subtotal);
+
+        return itemRepository.save(item);
     }
 
     public Item update(Item item) {
@@ -50,10 +56,4 @@ public class ItemService {
 
         itemRepository.deleteById(id);
     }
-
-    // TODO: add methods
-
-//    private Product product;
-//    private Integer quantity;
-//    private Double subtotal;
 }

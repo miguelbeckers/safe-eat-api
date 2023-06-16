@@ -4,6 +4,7 @@ import ipb.pt.safeeat.constants.*;
 import ipb.pt.safeeat.model.Item;
 import ipb.pt.safeeat.model.Order;
 import ipb.pt.safeeat.model.Restaurant;
+import ipb.pt.safeeat.model.User;
 import ipb.pt.safeeat.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,8 @@ public class OrderService {
     private FeedbackRepository feedbackRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Order> getAll() {
         return orderRepository.findAll();
@@ -42,6 +45,11 @@ public class OrderService {
     }
 
     public Order create(Order order) {
+        if(order.getFeedback() != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Feedbacks are not accepted. User create feedback endpoint instead.");
+        }
+
         addressRepository.findById(order.getAddress().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
 
@@ -51,7 +59,7 @@ public class OrderService {
         deliveryRepository.findById(order.getDelivery().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
 
-        for (Item item : order.getItems()) {
+        for(Item item : order.getItems()) {
             productRepository.findById(item.getProduct().getId()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
         }
@@ -59,29 +67,26 @@ public class OrderService {
         Restaurant restaurant = restaurantRepository.findById(order.getRestaurant().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
-        for (Item item : order.getItems()) {
-            item.setSubtotal(item.getProduct().getPrice() * item.getQuantity());
-        }
+        User client = userRepository.findById(order.getClient().getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
-        order.setItems(itemRepository.saveAll(order.getItems()));
+        double subtotal = order.getItems().stream().mapToDouble(Item::getSubtotal).sum();
+        double total = subtotal + order.getDelivery().getPrice();
+
+        order.setStatus("Registered");
         order.setTime(LocalDateTime.now());
+        order.setSubtotal(subtotal);
+        order.setTotal(total);
 
         Order created = orderRepository.save(order);
+
         restaurant.getOrders().add(created);
         restaurantRepository.save(restaurant);
-        return created;
 
-//        private String status;
-//        private LocalDateTime time;
-//        private Double subtotal;
-//        private Double total;
-//        private Integer quantity;
-//        private Address address;
-//        private Payment payment;
-//        private List<Item> items;
-//        private Delivery delivery;
-//        private Restaurant restaurant;
-//        private Feedback feedback;
+        client.getOrders().add(created);
+        userRepository.save(client);
+
+        return created;
     }
 
     public Order update(Order order) {

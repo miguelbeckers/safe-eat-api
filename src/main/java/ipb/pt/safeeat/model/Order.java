@@ -32,13 +32,16 @@ public class Order {
     private Address address;
     @NotEmpty(message = "invalid payment")
     private Payment payment;
-    @NotEmpty(message = "invalid items")
-    private List<Item> items;
     @NotEmpty(message = "invalid delivery")
     private Delivery delivery;
+    @NotEmpty(message = "invalid items")
+    private List<Item> items;
     @DocumentReference
     @NotEmpty(message = "invalid restaurant")
     private Restaurant restaurant;
+    @DocumentReference
+    @NotEmpty(message = "invalid client")
+    private User client;
     @DocumentReference
     private Feedback feedback;
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public class RestaurantSection {
     private String id;
     @NotEmpty(message = "invalid name")
     private String name;
+    @DocumentReference
+    @NotEmpty(message = "invalid restaurants")
     private List<Restaurant> restaurants;
 }

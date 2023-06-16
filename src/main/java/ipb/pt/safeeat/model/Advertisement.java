@@ -17,7 +17,7 @@ public class Advertisement {
     private String title;
     @NotEmpty(message = "invalid image")
     private String image;
-    @NotEmpty(message = "invalid restaurant")
     @DocumentReference
+    @NotEmpty(message = "invalid restaurant")
     private Restaurant restaurant;
 }

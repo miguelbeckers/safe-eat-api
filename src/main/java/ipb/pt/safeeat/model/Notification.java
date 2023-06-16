@@ -21,5 +21,6 @@ public class Notification {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime time;
     @DocumentReference
+    @NotEmpty(message = "invalid order")
     private Order order;
 }

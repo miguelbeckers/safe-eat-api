@@ -27,7 +27,4 @@ public class Product {
     @DocumentReference
     @NotEmpty(message = "invalid ingredients")
     private List<Ingredient> ingredients;
-    @NotEmpty(message = "invalid restaurant")
-    @DocumentReference
-    private Restaurant restaurant;
 }

@@ -42,18 +42,7 @@ public class ProductService {
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
         }
 
-        Restaurant restaurant = restaurantRepository.findById(product.getRestaurant().getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
-
-        Product created = productRepository.save(product);
-        restaurant.getProducts().add(created);
-        restaurantRepository.save(restaurant);
-
-//        private List<Category> categories;
-//        private List<Ingredient> ingredients;
-//        private Restaurant restaurant;
-
-        return created;
+        return productRepository.save(product);
     }
 
     public Product update(Product product) {

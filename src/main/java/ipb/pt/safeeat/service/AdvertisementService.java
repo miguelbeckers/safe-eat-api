@@ -35,6 +35,7 @@ public class AdvertisementService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
         Advertisement created = advertisementRepository.save(advertisement);
+
         restaurant.getAdvertisements().add(created);
         restaurantRepository.save(restaurant);
         return created;

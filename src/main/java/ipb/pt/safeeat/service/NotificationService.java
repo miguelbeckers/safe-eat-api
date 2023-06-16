@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,11 +34,8 @@ public class NotificationService {
         orderRepository.findById(notification.getOrder().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
 
+        notification.setTime(LocalDateTime.now());
         return notificationRepository.save(notification);
-
-//        private String title;
-//        private LocalDateTime time;
-//        private Order order;
     }
 
     public Notification update(Notification notification) {

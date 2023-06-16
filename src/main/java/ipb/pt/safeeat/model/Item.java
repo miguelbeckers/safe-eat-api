@@ -1,5 +1,6 @@
 package ipb.pt.safeeat.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,10 @@ public class Item {
     @Id
     private String id;
     @DocumentReference
+    @NotEmpty(message = "invalid product")
     private Product product;
     @NotEmpty(message = "invalid quantity")
     private Integer quantity;
-    @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double subtotal;
 }

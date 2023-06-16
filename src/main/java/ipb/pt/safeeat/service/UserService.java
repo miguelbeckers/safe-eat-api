@@ -1,8 +1,5 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.AddressConstants;
-import ipb.pt.safeeat.constants.OrderConstants;
-import ipb.pt.safeeat.constants.PaymentConstants;
 import ipb.pt.safeeat.constants.RestrictionConstants;
 import ipb.pt.safeeat.constants.UserConstants;
 import ipb.pt.safeeat.model.*;
@@ -39,19 +36,28 @@ public class UserService {
 
     public User create(User user) {
         if (user.getPassword().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid password");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Invalid password");
         }
 
         if (user.getAddress() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, AddressConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Addresses are not accepted. Use create address instead.");
         }
 
         if (user.getPayments() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, PaymentConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Payments are not accepted. Use create payment instead.");
         }
 
         if (user.getOrders() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.NOT_ACCEPTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Orders are not accepted. Use create order instead.");
+        }
+
+        if (user.getRestaurants() != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Restaurants are not accepted. Use create restaurant instead.");
         }
 
         if (user.getRestrictions() != null) {
