@@ -38,11 +38,11 @@ public class HomeService {
     }
 
     public Home create(Home home) {
-        checkContent(home);
+        checkDependencies(home);
         return homeRepository.save(home);
     }
 
-    private void checkContent(Home home) {
+    private void checkDependencies(Home home) {
         for(Object content: home.getContent()){
             if(content instanceof RestaurantSection){
                 restaurantSectionRepository.findById(((RestaurantSection) content).getId()).orElseThrow(
@@ -60,7 +60,7 @@ public class HomeService {
         Home old = homeRepository.findById(home.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, HomeConstants.NOT_FOUND));
 
-        checkContent(home);
+        checkDependencies(home);
         BeanUtils.copyProperties(home, old);
         return homeRepository.save(home);
     }

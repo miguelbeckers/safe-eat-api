@@ -88,10 +88,6 @@ public class OrderService {
             old.setStatus(order.getStatus());
         }
 
-        else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only the status can be changed");
-        }
-
         return orderRepository.save(order);
     }
 

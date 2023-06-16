@@ -58,7 +58,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, OrderConstants.NOT_ACCEPTED);
         }
 
-        checkRestrictions(user);
+        checkDependencies(user);
 
         Cart cart = cartRepository.save(new Cart());
         user.setCart(cart);
@@ -66,7 +66,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    private void checkRestrictions(User user) {
+    private void checkDependencies(User user) {
         if (user.getRestrictions() != null) {
             for (Restriction restriction : user.getRestrictions()) {
                 restrictionRepository.findById(restriction.getId()).orElseThrow(
@@ -79,7 +79,7 @@ public class UserService {
         User old = userRepository.findById(user.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
-        checkRestrictions(user);
+        checkDependencies(user);
 
         BeanUtils.copyProperties(user, old);
         return userRepository.save(user);

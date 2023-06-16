@@ -36,4 +36,6 @@ public class User {
     private List<Order> orders;
     @DocumentReference
     private Cart cart;
+    @DocumentReference
+    private List<Restaurant> restaurants;
 }
