@@ -33,6 +33,12 @@ public class IngredientService {
     }
 
     public Ingredient create(Ingredient ingredient) {
+        checkDependencies(ingredient);
+
+        return ingredientRepository.save(ingredient);
+    }
+
+    private void checkDependencies(Ingredient ingredient) {
         for(Restriction restriction : ingredient.getRestrictions()) {
             restrictionRepository.findById(restriction.getId()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
@@ -50,6 +56,7 @@ public class IngredientService {
         Ingredient old = ingredientRepository.findById(ingredient.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
 
+        checkDependencies(ingredient);
         BeanUtils.copyProperties(ingredient, old);
         return ingredientRepository.save(ingredient);
     }

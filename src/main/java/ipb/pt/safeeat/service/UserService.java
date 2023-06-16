@@ -26,6 +26,9 @@ public class UserService {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
     public List<User> getAll() {
         return userRepository.findAll();
     }
@@ -66,6 +69,8 @@ public class UserService {
     }
 
     public User update(User user) {
+        //TODO: can we update everything, or only the basic fields?
+
         User old = userRepository.findById(user.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
@@ -78,5 +83,7 @@ public class UserService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         userRepository.deleteById(id);
+
+        //TODO: delete all the restaurants that the user owns
     }
 }

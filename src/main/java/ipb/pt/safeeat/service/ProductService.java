@@ -25,6 +25,7 @@ public class ProductService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
+    //TODO change the isRestrict property according to the current user
     public List<Product> getAll() {
         return productRepository.findAll();
     }
