@@ -1,6 +1,6 @@
 package ipb.pt.safeeat.model;
 
-import jakarta.validation.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -16,6 +16,6 @@ public class Home {
     @Id
     private String id;
     @DocumentReference
-    @NotEmpty(message = "Invalid content")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Object> content;
 }

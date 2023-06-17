@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class HomeService {
@@ -36,30 +38,20 @@ public class HomeService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, HomeConstants.NOT_FOUND));
     }
 
-    public Home create(Home home) {
+    public Home create() {
         List<Object> content = new ArrayList<>();
-        for (Object object : home.getContent()) {
-            String id = ((RestaurantSection) object).getId();
-            RestaurantSection restaurantSection = restaurantSectionRepository.findById(id).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantSectionConstants.NOT_FOUND));
 
-            if (restaurantSection != null) {
-                content.add(restaurantSection);
-                continue;
-            }
+        List<RestaurantSection> restaurantSections = restaurantSectionRepository.findAll();
+        List<Advertisement> advertisements = advertisementRepository.findAll();
 
-            Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
+        content.addAll(restaurantSections);
+        content.addAll(advertisements);
 
-            if (advertisement != null) {
-                content.add(advertisement);
-                continue;
-            }
+        Collections.shuffle(content, new Random(System.nanoTime()));
 
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid object");
-        }
-
+        Home home = new Home();
         home.setContent(content);
+
         return homeRepository.save(home);
     }
 

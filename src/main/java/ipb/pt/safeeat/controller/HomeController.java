@@ -28,8 +28,8 @@ public class HomeController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody Home home) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(homeService.create(home));
+    public ResponseEntity<Object> create() {
+        return ResponseEntity.status(HttpStatus.CREATED).body(homeService.create());
     }
 
     @PutMapping
