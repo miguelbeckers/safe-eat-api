@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,15 +33,20 @@ public class ProductService {
     }
 
     public Product create(Product product) {
+        List<Ingredient> ingredients = new ArrayList<>();
         for(Ingredient ingredient : product.getIngredients()) {
-            ingredientRepository.findById(ingredient.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
+            ingredients.add(ingredientRepository.findById(ingredient.getId()).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND)));
         }
 
+        List<Category> categories = new ArrayList<>();
         for(Category category : product.getCategories()) {
-            categoryRepository.findById(category.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
+            categories.add(categoryRepository.findById(category.getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND)));
         }
+
+        product.setIngredients(ingredients);
+        product.setCategories(categories);
 
         return productRepository.save(product);
     }
@@ -54,9 +60,6 @@ public class ProductService {
     }
 
     public void delete(String id) {
-        productRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
-
         productRepository.deleteById(id);
     }
 }

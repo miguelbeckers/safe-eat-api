@@ -31,8 +31,8 @@ public class IngredientService {
     }
 
     public Ingredient create(Ingredient ingredient) {
-        if(ingredient.getRestrictions() != null && !ingredient.getRestrictions().isEmpty()) {
-            for(Restriction restriction : ingredient.getRestrictions()) {
+        if (ingredient.getRestrictions() != null && !ingredient.getRestrictions().isEmpty()) {
+            for (Restriction restriction : ingredient.getRestrictions()) {
                 restrictionRepository.findById(restriction.getId()).orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
             }
@@ -50,9 +50,6 @@ public class IngredientService {
     }
 
     public void delete(String id) {
-        ingredientRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
-                
         ingredientRepository.deleteById(id);
     }
 }

@@ -50,9 +50,6 @@ public class PaymentService {
     }
 
     public void delete(String id) {
-        paymentRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, PaymentConstants.NOT_FOUND));
-
         paymentRepository.deleteById(id);
     }
 }

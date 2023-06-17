@@ -47,12 +47,14 @@ public class HomeService {
         content.addAll(restaurantSections);
         content.addAll(advertisements);
 
-        Collections.shuffle(content, new Random(System.nanoTime()));
+//        Collections.shuffle(content, new Random(System.nanoTime()));
 
         Home home = new Home();
         home.setContent(content);
 
-        return homeRepository.save(home);
+        Home created = homeRepository.save(home);
+
+        return created;
     }
 
     public Home update(Home home) {
@@ -64,9 +66,6 @@ public class HomeService {
     }
 
     public void delete(String id) {
-        homeRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, HomeConstants.NOT_FOUND));
-
         homeRepository.deleteById(id);
     }
 }

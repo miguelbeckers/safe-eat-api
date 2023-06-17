@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,11 +42,15 @@ public class UserService {
         }
 
         if (user.getRestrictions() != null && !user.getRestrictions().isEmpty()) {
+            List<Restriction> restrictions = new ArrayList<>();
             for (Restriction restriction : user.getRestrictions()) {
-                restrictionRepository.findById(restriction.getId()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND));
+                restrictions.add(restrictionRepository.findById(restriction.getId()).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND)));
             }
+
+            user.setRestrictions(restrictions);
         }
+
 
         Cart cart = cartRepository.save(new Cart());
         user.setCart(cart);
@@ -62,9 +67,6 @@ public class UserService {
     }
 
     public void delete(String id) {
-        userRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
-
         userRepository.deleteById(id);
     }
 }

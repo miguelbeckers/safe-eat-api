@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,17 +50,11 @@ public class RestaurantService {
     }
 
     public Restaurant create(Restaurant restaurant) {
-        if(restaurant.getCategories() != null && !restaurant.getCategories().isEmpty()) {
-            for (Category category : restaurant.getCategories()) {
-                categoryRepository.findById(category.getId()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CategoryConstants.NOT_FOUND));
-            }
-        }
-
         User owner = userRepository.findById(restaurant.getOwner().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         Restaurant created = restaurantRepository.save(restaurant);
+
         owner.getRestaurants().add(created);
         userRepository.save(owner);
 
@@ -75,9 +70,6 @@ public class RestaurantService {
     }
 
     public void delete(String id) {
-        restaurantRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
-
         restaurantRepository.deleteById(id);
     }
 }

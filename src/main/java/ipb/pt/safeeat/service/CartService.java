@@ -53,9 +53,6 @@ public class CartService {
     }
 
     public void delete(String id) {
-        cartRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CartConstants.NOT_FOUND));
-
         cartRepository.deleteById(id);
     }
 }

@@ -62,9 +62,6 @@ public class ItemService {
     }
 
     public void delete(String id) {
-        itemRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
-
         itemRepository.deleteById(id);
     }
 }

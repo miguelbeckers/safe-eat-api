@@ -51,9 +51,6 @@ public class RestaurantSectionService {
     }
 
     public void delete(String id) {
-        restaurantSectionRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantSectionConstants.NOT_FOUND));
-
         restaurantSectionRepository.deleteById(id);
     }
 }

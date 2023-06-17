@@ -18,7 +18,7 @@ public class Advertisement {
     private String title;
     @NotEmpty(message = "Invalid image")
     private String image;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @NotNull(message = "Invalid restaurant")
     private Restaurant restaurant;
 }

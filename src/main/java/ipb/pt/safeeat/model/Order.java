@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
@@ -29,8 +28,6 @@ public class Order {
     private Double total = 0.0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer quantity = 0;
-
-
     @NotNull(message = "Invalid address")
     private Address address;
     @NotNull(message = "Invalid payment")
@@ -42,10 +39,10 @@ public class Order {
     @NotNull(message = "Invalid restaurant")
     @DocumentReference
     private Restaurant restaurant;
-    @NotNull(message = "Invalid client")
-    @DocumentReference
-    private User client;
     @DocumentReference
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Feedback feedback;
+    @NotNull(message = "Invalid client")
+    @DocumentReference(lazy=true)
+    private User client;
 }

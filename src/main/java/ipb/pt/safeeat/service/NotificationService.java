@@ -63,9 +63,6 @@ public class NotificationService {
     }
 
     public void delete(String id) {
-        notificationRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, NotificationConstants.NOT_FOUND));
-
         notificationRepository.deleteById(id);
     }
 }

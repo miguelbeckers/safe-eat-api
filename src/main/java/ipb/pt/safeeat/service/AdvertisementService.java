@@ -52,9 +52,6 @@ public class AdvertisementService {
     }
 
     public void delete(String id) {
-        advertisementRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
-                
         advertisementRepository.deleteById(id);
     }
 }

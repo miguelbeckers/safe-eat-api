@@ -31,17 +31,20 @@ public class User {
     private List<Restriction> restrictions;
     @JsonIgnore
     @DocumentReference
-    private List<Address> address;
+    private Cart cart;
     @JsonIgnore
     @DocumentReference
     private List<Payment> payments;
     @JsonIgnore
     @DocumentReference
+    private List<Address> address;
+    @JsonIgnore
+    @DocumentReference
     private List<Order> orders;
     @JsonIgnore
     @DocumentReference
-    private Cart cart;
+    private List<Notification> notifications;
     @JsonIgnore
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private List<Restaurant> restaurants;
 }
