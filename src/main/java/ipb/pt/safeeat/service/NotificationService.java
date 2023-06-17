@@ -3,6 +3,7 @@ package ipb.pt.safeeat.service;
 import ipb.pt.safeeat.constants.NotificationConstants;
 import ipb.pt.safeeat.constants.OrderConstants;
 import ipb.pt.safeeat.model.Notification;
+import ipb.pt.safeeat.model.Order;
 import ipb.pt.safeeat.repository.NotificationRepository;
 import ipb.pt.safeeat.repository.OrderRepository;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +23,12 @@ public class NotificationService {
     private OrderRepository orderRepository;
 
     public List<Notification> getAll() {
-        return notificationRepository.findAll();
+        try {
+            return notificationRepository.findAll();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public Notification findById(String id) {
@@ -31,10 +37,12 @@ public class NotificationService {
     }
 
     public Notification create(Notification notification) {
-        orderRepository.findById(notification.getOrder().getId()).orElseThrow(
+        Order order = orderRepository.findById(notification.getOrder().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, OrderConstants.NOT_FOUND));
 
+        notification.setOrder(order);
         notification.setTime(LocalDateTime.now());
+
         return notificationRepository.save(notification);
     }
 
@@ -46,10 +54,18 @@ public class NotificationService {
         return notificationRepository.save(notification);
     }
 
+    public Notification view(String id) {
+        Notification notification = notificationRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, NotificationConstants.NOT_FOUND));
+
+        notification.setIsViewed(true);
+        return notificationRepository.save(notification);
+    }
+
     public void delete(String id) {
         notificationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, NotificationConstants.NOT_FOUND));
-                
+
         notificationRepository.deleteById(id);
     }
 }

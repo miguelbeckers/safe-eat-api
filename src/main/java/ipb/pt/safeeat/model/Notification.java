@@ -17,10 +17,13 @@ import java.time.LocalDateTime;
 public class Notification {
     @Id
     private String id;
-    @NotEmpty(message = "Invalid title")
-    private String title;
+
+    @NotEmpty(message = "Invalid content")
+    private String content;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime time;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean isViewed = false;
     @DocumentReference
     @NotNull(message = "Invalid order")
     private Order order;

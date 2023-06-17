@@ -29,17 +29,17 @@ public class User {
     private String cellphone;
     @DocumentReference
     private List<Restriction> restrictions;
+    @JsonIgnore
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Address> address;
+    @JsonIgnore
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Payment> payments;
+    @JsonIgnore
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Order> orders;
+    @JsonIgnore
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Cart cart;
     @JsonIgnore
     @DocumentReference

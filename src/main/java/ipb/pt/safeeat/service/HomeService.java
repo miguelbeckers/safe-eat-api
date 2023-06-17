@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,18 +37,29 @@ public class HomeService {
     }
 
     public Home create(Home home) {
-        for(Object content: home.getContent()){
-            if(content instanceof RestaurantSection){
-                restaurantSectionRepository.findById(((RestaurantSection) content).getId()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantSectionConstants.NOT_FOUND));
+        List<Object> content = new ArrayList<>();
+        for (Object object : home.getContent()) {
+            String id = ((RestaurantSection) object).getId();
+            RestaurantSection restaurantSection = restaurantSectionRepository.findById(id).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantSectionConstants.NOT_FOUND));
+
+            if (restaurantSection != null) {
+                content.add(restaurantSection);
+                continue;
             }
-            else if(content instanceof Advertisement){
-                advertisementRepository.findById(((Advertisement) content).getId()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
+
+            Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
+
+            if (advertisement != null) {
+                content.add(advertisement);
+                continue;
             }
-            else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid content");
+
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid object");
         }
 
+        home.setContent(content);
         return homeRepository.save(home);
     }
 
@@ -62,7 +74,7 @@ public class HomeService {
     public void delete(String id) {
         homeRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, HomeConstants.NOT_FOUND));
-                
+
         homeRepository.deleteById(id);
     }
 }

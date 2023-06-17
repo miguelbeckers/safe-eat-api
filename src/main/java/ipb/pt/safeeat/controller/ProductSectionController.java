@@ -28,8 +28,8 @@ public class ProductSectionController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody ProductSection productSection) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productSectionService.create(productSection));
+    public ResponseEntity<Object> create(@Valid @RequestBody ProductSection productSection, @RequestParam String restaurantId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productSectionService.create(productSection, restaurantId));
     }
 
     @PutMapping

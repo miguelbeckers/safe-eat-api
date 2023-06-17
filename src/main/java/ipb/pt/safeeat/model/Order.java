@@ -29,6 +29,8 @@ public class Order {
     private Double total = 0.0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer quantity = 0;
+
+
     @NotNull(message = "Invalid address")
     private Address address;
     @NotNull(message = "Invalid payment")
@@ -37,11 +39,11 @@ public class Order {
     private Delivery delivery;
     @NotEmpty(message = "Invalid items")
     private List<Item> items;
-    @DocumentReference
     @NotNull(message = "Invalid restaurant")
-    private Restaurant restaurant;
     @DocumentReference
+    private Restaurant restaurant;
     @NotNull(message = "Invalid client")
+    @DocumentReference
     private User client;
     @DocumentReference
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

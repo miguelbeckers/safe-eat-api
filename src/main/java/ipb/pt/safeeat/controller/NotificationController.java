@@ -37,6 +37,11 @@ public class NotificationController {
         return ResponseEntity.ok().body(notificationService.update(notification));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> view(@PathVariable String id) {
+        return ResponseEntity.ok().body(notificationService.view(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable String id) {
         notificationService.delete(id);

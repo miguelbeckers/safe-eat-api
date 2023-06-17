@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +32,13 @@ public class RestaurantSectionService {
     }
 
     public RestaurantSection create(RestaurantSection restaurantSection) {
+        List<Restaurant> restaurants = new ArrayList<>();
+        for(Restaurant restaurant : restaurantSection.getRestaurants()) {
+            restaurants.add(restaurantRepository.findById(restaurant.getId()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND)));
+        }
+
+        restaurantSection.setRestaurants(restaurants);
         return restaurantSectionRepository.save(restaurantSection);
     }
 

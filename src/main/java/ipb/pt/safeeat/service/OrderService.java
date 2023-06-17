@@ -58,9 +58,15 @@ public class OrderService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         for(Item item : order.getItems()) {
-            productRepository.findById(item.getProduct().getId()).orElseThrow(
+            itemRepository.findById(item.getId()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
         }
+
+        order.setAddress(address);
+        order.setPayment(payment);
+        order.setDelivery(delivery);
+        order.setClient(client);
+        order.setRestaurant(restaurant);
 
         double subtotal = order.getItems().stream().mapToDouble(Item::getSubtotal).sum();
         double total = subtotal + order.getDelivery().getPrice();
@@ -69,9 +75,6 @@ public class OrderService {
         order.setTime(LocalDateTime.now());
         order.setSubtotal(subtotal);
         order.setTotal(total);
-        order.setAddress(address);
-        order.setPayment(payment);
-        order.setDelivery(delivery);
 
         Order created = orderRepository.save(order);
 

@@ -34,10 +34,12 @@ public class AdvertisementService {
         Restaurant restaurant = restaurantRepository.findById(advertisement.getRestaurant().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
+        advertisement.setRestaurant(restaurant);
         Advertisement created = advertisementRepository.save(advertisement);
 
         restaurant.getAdvertisements().add(created);
         restaurantRepository.save(restaurant);
+
         return created;
     }
 

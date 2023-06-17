@@ -1,5 +1,6 @@
 package ipb.pt.safeeat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -30,19 +31,19 @@ public class Restaurant {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Delivery> deliveries;
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<Product> products;
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<ProductSection> productSections;
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<Advertisement> advertisements;
     @DocumentReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<Order> orders;
     @DocumentReference
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message = "Invalid cover")
+    @NotNull(message = "Invalid owner")
     private User owner;
 }
