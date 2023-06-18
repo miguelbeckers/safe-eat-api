@@ -18,5 +18,7 @@ public class Home {
     private String id;
     @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<Object> content = new ArrayList<>();
+    private List<Advertisement> advertisements = new ArrayList<>();
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<RestaurantSection> restaurantSections = new ArrayList<>();
 }

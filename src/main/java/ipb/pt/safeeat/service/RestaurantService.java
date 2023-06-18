@@ -37,8 +37,8 @@ public class RestaurantService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         List<Restaurant> restaurants = new ArrayList<>();
-        for(String restaurantId : owner.getRestaurantIds()){
-            restaurants.add(restaurantRepository.findById(restaurantId).orElseThrow(
+        for(Restaurant restaurant : owner.getRestaurants()){
+            restaurants.add(restaurantRepository.findById(restaurant.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND)));
         }
 
@@ -46,12 +46,12 @@ public class RestaurantService {
     }
 
     public Restaurant create(Restaurant restaurant) {
-        User owner = userRepository.findById(restaurant.getOwnerId()).orElseThrow(
+        User owner = userRepository.findById(restaurant.getOwner().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         Restaurant created = restaurantRepository.save(restaurant);
 
-        owner.getRestaurantIds().add(created.getId());
+        owner.getRestaurants().add(created);
         userRepository.save(owner);
 
         return created;

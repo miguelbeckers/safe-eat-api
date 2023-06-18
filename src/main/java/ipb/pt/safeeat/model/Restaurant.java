@@ -19,8 +19,6 @@ import java.util.List;
 public class Restaurant {
     @Id
     private String id;
-
-
     @NotEmpty(message = "Invalid name")
     private String name;
     @NotEmpty(message = "Invalid logo")
@@ -29,19 +27,21 @@ public class Restaurant {
     private String cover;
     @DocumentReference(lazy=true)
     @JsonIgnore
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
     @DocumentReference(lazy=true)
     @JsonIgnore
-    private List<ProductSection> productSections;
+    private List<ProductSection> productSections = new ArrayList<>();
     @DocumentReference(lazy=true)
     @JsonIgnore
-    private List<Advertisement> advertisements;
+    private List<Advertisement> advertisements = new ArrayList<>();
     @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<Delivery> deliveries;
+    private List<Delivery> deliveries = new ArrayList<>();
+    @DocumentReference(lazy=true)
     @JsonIgnore
-    private List<String> orderIds = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
+    @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message = "Invalid ownerId")
-    private String ownerId;
+    @NotNull(message = "Invalid owner")
+    private User owner;
 }

@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,21 +34,14 @@ public class HomeService {
     }
 
     public Home create() {
-        List<Object> content = new ArrayList<>();
-
         List<RestaurantSection> restaurantSections = restaurantSectionRepository.findAll();
         List<Advertisement> advertisements = advertisementRepository.findAll();
 
-        content.addAll(restaurantSections);
-        content.addAll(advertisements);
-
-//        Collections.shuffle(content, new Random(System.nanoTime()));
-
         Home home = new Home();
-        home.setContent(content);
-        Home created = homeRepository.save(home);
+        home.setRestaurantSections(restaurantSections);
+        home.setAdvertisements(advertisements);
 
-        return created;
+        return homeRepository.save(home);
     }
 
     public Home update(Home home) {

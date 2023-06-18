@@ -46,5 +46,6 @@ public class User {
     @DocumentReference(lazy=true)
     private List<Notification> notifications = new ArrayList<>();
     @JsonIgnore
-    private List<String> restaurantIds = new ArrayList<>();
+    @DocumentReference(lazy=true)
+    private List<Restaurant> restaurants = new ArrayList<>();
 }

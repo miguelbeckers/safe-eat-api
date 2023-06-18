@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +17,6 @@ public class Advertisement {
     private String title;
     @NotEmpty(message = "Invalid image")
     private String image;
-    @NotNull(message = "Invalid restaurantId")
-    private String restaurantId;
+    @NotNull(message = "Invalid restaurant")
+    private Restaurant restaurant;
 }

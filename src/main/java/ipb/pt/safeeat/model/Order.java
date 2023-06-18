@@ -42,6 +42,6 @@ public class Order {
     @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Feedback feedback;
-    @NotNull(message = "Invalid clientId")
-    private String clientId;
+    @NotNull(message = "Invalid client")
+    private User client;
 }

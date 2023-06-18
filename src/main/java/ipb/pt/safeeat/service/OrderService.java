@@ -50,7 +50,7 @@ public class OrderService {
         Restaurant restaurant = restaurantRepository.findById(order.getRestaurant().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
-        User client = userRepository.findById(order.getClientId()).orElseThrow(
+        User client = userRepository.findById(order.getClient().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         for(Item item : order.getItems()) {
@@ -62,6 +62,7 @@ public class OrderService {
         order.setPayment(payment);
         order.setDelivery(delivery);
         order.setRestaurant(restaurant);
+        order.setClient(client);
 
         double subtotal = order.getItems().stream().mapToDouble(Item::getSubtotal).sum();
         double total = subtotal + order.getDelivery().getPrice();
@@ -73,7 +74,7 @@ public class OrderService {
 
         Order created = orderRepository.save(order);
 
-        restaurant.getOrderIds().add(created.getId());
+        restaurant.getOrders().add(created);
         restaurantRepository.save(restaurant);
 
         client.getOrders().add(created);
