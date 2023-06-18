@@ -1,10 +1,13 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.IngredientConstants;
+import ipb.pt.safeeat.constants.RestaurantConstants;
 import ipb.pt.safeeat.constants.RestrictionConstants;
 import ipb.pt.safeeat.model.Ingredient;
+import ipb.pt.safeeat.model.Restaurant;
 import ipb.pt.safeeat.model.Restriction;
 import ipb.pt.safeeat.repository.IngredientRepository;
+import ipb.pt.safeeat.repository.RestaurantRepository;
 import ipb.pt.safeeat.repository.RestrictionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class IngredientService {
     private IngredientRepository ingredientRepository;
     @Autowired
     private RestrictionRepository restrictionRepository;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     public List<Ingredient> getAll() {
         return ingredientRepository.findAll();
@@ -32,7 +37,10 @@ public class IngredientService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, IngredientConstants.NOT_FOUND));
     }
 
-    public Ingredient create(Ingredient ingredient) {
+    public Ingredient create(Ingredient ingredient, String restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
+
         if (ingredient.getRestrictions() != null && !ingredient.getRestrictions().isEmpty()) {
             List<Restriction> restrictions = new ArrayList<>();
             for (Restriction restriction : ingredient.getRestrictions()) {
@@ -43,14 +51,18 @@ public class IngredientService {
             ingredient.setRestrictions(restrictions);
         }
 
-        return ingredientRepository.save(ingredient);
+        Ingredient created = ingredientRepository.save(ingredient);
+        restaurant.getIngredients().add(created);
+        restaurantRepository.save(restaurant);
+
+        return created;
     }
 
     @Transactional
-    public List<Ingredient> createMany(List<Ingredient> ingredients) {
+    public List<Ingredient> createMany(List<Ingredient> ingredients, String restaurantId) {
         List<Ingredient> created = new ArrayList<>();
         for(Ingredient ingredient : ingredients) {
-            created.add(create(ingredient));
+            created.add(create(ingredient, restaurantId));
         }
 
         return created;

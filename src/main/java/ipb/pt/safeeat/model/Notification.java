@@ -24,6 +24,6 @@ public class Notification {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isViewed = false;
     @NotNull(message = "Invalid order")
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private Order order;
 }

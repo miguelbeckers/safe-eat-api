@@ -21,7 +21,7 @@ public class Ingredient {
     private String name;
     @NotEmpty(message = "Invalid description")
     private String description;
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private List<Restriction> restrictions = new ArrayList<>();
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;

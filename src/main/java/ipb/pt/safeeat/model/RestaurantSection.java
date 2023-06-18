@@ -17,7 +17,7 @@ public class RestaurantSection {
     private String id;
     @NotEmpty(message = "Invalid name")
     private String name;
-    @DocumentReference(lazy=true)
+    @DocumentReference
     @NotEmpty(message = "Invalid restaurants")
     private List<Restaurant> restaurants;
 }

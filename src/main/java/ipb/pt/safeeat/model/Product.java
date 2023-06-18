@@ -20,12 +20,14 @@ public class Product {
     private String name;
     @NotNull(message = "Invalid price")
     private Double price;
+    @NotNull(message = "Invalid images")
+    private List<String> images;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;
-    @DocumentReference(lazy=true)
+    @DocumentReference
     @NotEmpty(message = "Invalid categories")
     private List<Category> categories;
-    @DocumentReference(lazy=true)
+    @DocumentReference
     @NotEmpty(message = "Invalid ingredients")
     private List<Ingredient> ingredients;
 }

@@ -30,13 +30,13 @@ public class IngredientController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody Ingredient ingredient) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.create(ingredient));
+    public ResponseEntity<Object> create(@Valid @RequestBody Ingredient ingredient, @RequestParam String restaurantId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.create(ingredient, restaurantId));
     }
 
     @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Ingredient> ingredients) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.createMany(ingredients));
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Ingredient> ingredients, @RequestParam String restaurantId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.createMany(ingredients, restaurantId));
     }
 
     @PutMapping

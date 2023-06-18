@@ -17,7 +17,7 @@ public class ProductSection {
     private String id;
     @NotEmpty(message = "Invalid name")
     private String name;
-    @DocumentReference(lazy=true)
+    @DocumentReference
     @NotEmpty(message = "Invalid products")
     private List<Product> products;
 }

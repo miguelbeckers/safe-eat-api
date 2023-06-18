@@ -7,7 +7,6 @@ import ipb.pt.safeeat.model.RestaurantSection;
 import ipb.pt.safeeat.repository.AdvertisementRepository;
 import ipb.pt.safeeat.repository.HomeRepository;
 import ipb.pt.safeeat.repository.RestaurantSectionRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -41,14 +40,6 @@ public class HomeService {
         home.setRestaurantSections(restaurantSections);
         home.setAdvertisements(advertisements);
 
-        return homeRepository.save(home);
-    }
-
-    public Home update(Home home) {
-        Home old = homeRepository.findById(home.getId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, HomeConstants.NOT_FOUND));
-
-        BeanUtils.copyProperties(home, old);
         return homeRepository.save(home);
     }
 

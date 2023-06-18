@@ -6,7 +6,6 @@ import ipb.pt.safeeat.model.Advertisement;
 import ipb.pt.safeeat.model.Restaurant;
 import ipb.pt.safeeat.repository.AdvertisementRepository;
 import ipb.pt.safeeat.repository.RestaurantRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,9 +32,13 @@ public class AdvertisementService {
     }
 
     public Advertisement create(Advertisement advertisement) {
+        if (advertisement.getRestaurant() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant is required");
+
         Restaurant restaurant = restaurantRepository.findById(advertisement.getRestaurant().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
+        advertisement.setRestaurant(restaurant);
         Advertisement created = advertisementRepository.save(advertisement);
 
         restaurant.getAdvertisements().add(created);
@@ -45,10 +48,10 @@ public class AdvertisementService {
     }
 
     @Transactional
-    public List<Advertisement> createMany(List<Advertisement> addresses) {
+    public List<Advertisement> createMany(List<Advertisement> advertisements) {
         List<Advertisement> created = new ArrayList<>();
-        for(Advertisement address : addresses) {
-            created.add(create(address));
+        for (Advertisement advertisement : advertisements) {
+            created.add(create(advertisement));
         }
 
         return created;
@@ -58,8 +61,10 @@ public class AdvertisementService {
         Advertisement old = advertisementRepository.findById(advertisement.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AdvertisementConstants.NOT_FOUND));
 
-        BeanUtils.copyProperties(advertisement, old);
-        return advertisementRepository.save(advertisement);
+        old.setTitle(advertisement.getTitle());
+        old.setImage(advertisement.getImage());
+
+        return advertisementRepository.save(old);
     }
 
     public void delete(String id) {

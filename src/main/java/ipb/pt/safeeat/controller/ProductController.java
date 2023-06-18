@@ -35,8 +35,8 @@ public class ProductController {
     }
 
     @PostMapping("/many")
-    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Product> products, @RequestParam String userId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createMany(products, userId));
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Product> products, @RequestParam String restaurantId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createMany(products, restaurantId));
     }
 
     @PutMapping

@@ -1,8 +1,6 @@
 package ipb.pt.safeeat.controller;
 
-import ipb.pt.safeeat.model.Home;
 import ipb.pt.safeeat.service.HomeService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +28,6 @@ public class HomeController {
     @PostMapping
     public ResponseEntity<Object> create() {
         return ResponseEntity.status(HttpStatus.CREATED).body(homeService.create());
-    }
-
-    @PutMapping
-    public ResponseEntity<Object> update(@Valid @RequestBody Home home) {
-        return ResponseEntity.ok().body(homeService.update(home));
     }
 
     @DeleteMapping("/{id}")

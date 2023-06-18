@@ -47,6 +47,9 @@ public class RestaurantService {
     }
 
     public Restaurant create(Restaurant restaurant) {
+        if(restaurant.getOwner() == null || restaurant.getOwner().getId() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Owner is required");
+
         User owner = userRepository.findById(restaurant.getOwner().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 

@@ -29,23 +29,23 @@ public class User {
     @NotEmpty(message = "Invalid cellphone")
     private String cellphone;
     @JsonIgnore
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private Cart cart;
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private List<Restriction> restrictions = new ArrayList<>();
     @JsonIgnore
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private List<Payment> payments = new ArrayList<>();
     @JsonIgnore
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private List<Address> address = new ArrayList<>();
     @JsonIgnore
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private List<Order> orders = new ArrayList<>();
     @JsonIgnore
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private List<Notification> notifications = new ArrayList<>();
     @JsonIgnore
-    @DocumentReference(lazy=true)
+    @DocumentReference
     private List<Restaurant> restaurants = new ArrayList<>();
 }
