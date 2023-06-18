@@ -17,17 +17,7 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
-    private DeliveryRepository deliveryRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ProductSectionRepository productSectionRepository;
-    @Autowired
-    private AdvertisementRepository advertisementRepository;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     public List<Restaurant> getAll() {
         try {
@@ -42,20 +32,26 @@ public class RestaurantService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
     }
 
-    public List<Restaurant> findByOwner(String id) {
-        User owner = userRepository.findById(id).orElseThrow(
+    public List<Restaurant> findByOwner(String ownerId) {
+        User owner = userRepository.findById(ownerId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
-        return owner.getRestaurants();
+        List<Restaurant> restaurants = new ArrayList<>();
+        for(String restaurantId : owner.getRestaurantIds()){
+            restaurants.add(restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND)));
+        }
+
+        return restaurants;
     }
 
     public Restaurant create(Restaurant restaurant) {
-        User owner = userRepository.findById(restaurant.getOwner().getId()).orElseThrow(
+        User owner = userRepository.findById(restaurant.getOwnerId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         Restaurant created = restaurantRepository.save(restaurant);
 
-        owner.getRestaurants().add(created);
+        owner.getRestaurantIds().add(created.getId());
         userRepository.save(owner);
 
         return created;

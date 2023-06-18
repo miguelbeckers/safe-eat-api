@@ -25,9 +25,6 @@ public class Restaurant {
     @NotEmpty(message = "Invalid cover")
     private String cover;
     @DocumentReference(lazy=true)
-    @NotEmpty(message = "Invalid categories")
-    private List<Category> categories;
-    @DocumentReference(lazy=true)
     @JsonIgnore
     private List<Product> products;
     @DocumentReference(lazy=true)
@@ -39,11 +36,9 @@ public class Restaurant {
     @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Delivery> deliveries;
-    @DocumentReference(lazy=true)
     @JsonIgnore
-    private List<Order> orders;
-    @DocumentReference(lazy=true)
+    private List<String> orderIds;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message = "Invalid owner")
-    private User owner;
+    @NotNull(message = "Invalid ownerId")
+    private String ownerId;
 }

@@ -26,10 +26,6 @@ public class OrderService {
     @Autowired
     private DeliveryRepository deliveryRepository;
     @Autowired
-    private FeedbackRepository feedbackRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
     private UserRepository userRepository;
 
     public List<Order> getAll() {
@@ -54,18 +50,17 @@ public class OrderService {
         Restaurant restaurant = restaurantRepository.findById(order.getRestaurant().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
-        User client = userRepository.findById(order.getClient().getId()).orElseThrow(
+        User client = userRepository.findById(order.getClientId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
         for(Item item : order.getItems()) {
             itemRepository.findById(item.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ItemConstants.NOT_FOUND));
         }
 
         order.setAddress(address);
         order.setPayment(payment);
         order.setDelivery(delivery);
-        order.setClient(client);
         order.setRestaurant(restaurant);
 
         double subtotal = order.getItems().stream().mapToDouble(Item::getSubtotal).sum();
@@ -78,7 +73,7 @@ public class OrderService {
 
         Order created = orderRepository.save(order);
 
-        restaurant.getOrders().add(created);
+        restaurant.getOrderIds().add(created.getId());
         restaurantRepository.save(restaurant);
 
         client.getOrders().add(created);

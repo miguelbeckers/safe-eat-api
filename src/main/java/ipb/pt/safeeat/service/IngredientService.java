@@ -2,6 +2,7 @@ package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.IngredientConstants;
 import ipb.pt.safeeat.constants.RestaurantConstants;
+import ipb.pt.safeeat.constants.RestrictionConstants;
 import ipb.pt.safeeat.model.Ingredient;
 import ipb.pt.safeeat.model.Restriction;
 import ipb.pt.safeeat.repository.IngredientRepository;
@@ -36,7 +37,7 @@ public class IngredientService {
             List<Restriction> restrictions = new ArrayList<>();
             for (Restriction restriction : ingredient.getRestrictions()) {
                 restrictions.add(restrictionRepository.findById(restriction.getId()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND)));
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestrictionConstants.NOT_FOUND)));
             }
         }
 

@@ -20,8 +20,6 @@ public class ProductService {
     private IngredientRepository ingredientRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private RestaurantRepository restaurantRepository;
 
     public List<Product> getAll() {
         return productRepository.findAll();

@@ -43,7 +43,7 @@ public class ProductSectionService {
         List<Product> products = new ArrayList<>();
         for(Product product : productSection.getProducts()) {
             Product original = productRepository.findById(product.getId()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductConstants.NOT_FOUND));
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, ProductSectionConstants.NOT_FOUND));
 
             products.add(original);
         }

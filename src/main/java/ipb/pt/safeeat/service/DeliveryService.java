@@ -1,6 +1,7 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.DeliveryConstants;
+import ipb.pt.safeeat.constants.RestaurantConstants;
 import ipb.pt.safeeat.model.Delivery;
 import ipb.pt.safeeat.model.Restaurant;
 import ipb.pt.safeeat.repository.DeliveryRepository;
@@ -17,7 +18,6 @@ import java.util.List;
 public class DeliveryService {
     @Autowired
     private DeliveryRepository deliveryRepository;
-
     @Autowired
     private RestaurantRepository restaurantRepository;
 
@@ -32,7 +32,7 @@ public class DeliveryService {
 
     public Delivery create(Delivery delivery, String restaurantId) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
 
         Delivery created = deliveryRepository.save(delivery);
 

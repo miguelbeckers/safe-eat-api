@@ -21,10 +21,6 @@ public class UserService {
     private CartRepository cartRepository;
     @Autowired
     private RestrictionRepository restrictionRepository;
-    @Autowired
-    private PaymentRepository paymentRepository;
-    @Autowired
-    private RestaurantRepository restaurantRepository;
 
     public List<User> getAll() {
         return userRepository.findAll();

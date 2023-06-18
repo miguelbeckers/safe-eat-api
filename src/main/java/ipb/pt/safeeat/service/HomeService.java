@@ -1,8 +1,6 @@
 package ipb.pt.safeeat.service;
 
-import ipb.pt.safeeat.constants.AdvertisementConstants;
 import ipb.pt.safeeat.constants.HomeConstants;
-import ipb.pt.safeeat.constants.RestaurantSectionConstants;
 import ipb.pt.safeeat.model.Advertisement;
 import ipb.pt.safeeat.model.Home;
 import ipb.pt.safeeat.model.RestaurantSection;
@@ -16,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class HomeService {
@@ -51,7 +47,6 @@ public class HomeService {
 
         Home home = new Home();
         home.setContent(content);
-
         Home created = homeRepository.save(home);
 
         return created;
