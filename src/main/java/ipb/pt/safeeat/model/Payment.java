@@ -23,7 +23,6 @@ public class Payment {
     private Integer number;
     @NotEmpty(message = "Invalid expirationDate")
     private String expirationDate;
-    // FIXME: expirationDate should be YearMonth type but it's not compatible with mongodb
     @NotNull(message = "Invalid ccv")
     private Integer cvv;
 }

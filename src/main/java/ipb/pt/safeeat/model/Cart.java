@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,5 +23,5 @@ public class Cart {
     private Double subtotal = 0.0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @DocumentReference(lazy=true)
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
 }

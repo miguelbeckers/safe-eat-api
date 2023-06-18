@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,7 +22,7 @@ public class Ingredient {
     @NotEmpty(message = "Invalid description")
     private String description;
     @DocumentReference(lazy=true)
-    private List<Restriction> restrictions;
+    private List<Restriction> restrictions = new ArrayList<>();
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;
 }

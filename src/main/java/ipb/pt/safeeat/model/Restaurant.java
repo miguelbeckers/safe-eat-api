@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,6 +19,8 @@ import java.util.List;
 public class Restaurant {
     @Id
     private String id;
+
+
     @NotEmpty(message = "Invalid name")
     private String name;
     @NotEmpty(message = "Invalid logo")
@@ -37,7 +40,7 @@ public class Restaurant {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Delivery> deliveries;
     @JsonIgnore
-    private List<String> orderIds;
+    private List<String> orderIds = new ArrayList<>();
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull(message = "Invalid ownerId")
     private String ownerId;

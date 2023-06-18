@@ -46,6 +46,10 @@ public class UserService {
             user.setRestrictions(restrictions);
         }
 
+        else {
+            user.setRestrictions(new ArrayList<>());
+        }
+
         Cart cart = cartRepository.save(new Cart());
         user.setCart(cart);
 

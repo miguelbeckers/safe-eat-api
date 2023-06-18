@@ -23,5 +23,4 @@ public class Delivery {
     private String startTime;
     @NotEmpty(message = "Invalid endTime")
     private String endTime;
-    // FIXME: startTime and endTime should be LocalTime type
 }

@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,23 +28,23 @@ public class User {
     private String email;
     @NotEmpty(message = "Invalid cellphone")
     private String cellphone;
-    @DocumentReference(lazy=true)
-    private List<Restriction> restrictions;
     @JsonIgnore
     @DocumentReference(lazy=true)
     private Cart cart;
+    @DocumentReference(lazy=true)
+    private List<Restriction> restrictions = new ArrayList<>();
     @JsonIgnore
     @DocumentReference(lazy=true)
-    private List<Payment> payments;
+    private List<Payment> payments = new ArrayList<>();
     @JsonIgnore
     @DocumentReference(lazy=true)
-    private List<Address> address;
+    private List<Address> address = new ArrayList<>();
     @JsonIgnore
     @DocumentReference(lazy=true)
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
     @JsonIgnore
     @DocumentReference(lazy=true)
-    private List<Notification> notifications;
+    private List<Notification> notifications = new ArrayList<>();
     @JsonIgnore
-    private List<String> restaurantIds;
+    private List<String> restaurantIds = new ArrayList<>();
 }
