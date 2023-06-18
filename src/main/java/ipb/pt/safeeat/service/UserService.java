@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -46,14 +47,20 @@ public class UserService {
             user.setRestrictions(restrictions);
         }
 
-        else {
-            user.setRestrictions(new ArrayList<>());
-        }
-
         Cart cart = cartRepository.save(new Cart());
         user.setCart(cart);
 
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public List<User> createMany(List<User> users) {
+        List<User> created = new ArrayList<>();
+        for(User user : users) {
+            created.add(create(user));
+        }
+
+        return created;
     }
 
     public User update(User user) {

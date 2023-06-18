@@ -29,6 +29,10 @@ public class RestrictionService {
         return restrictionRepository.save(restriction);
     }
 
+    public List<Restriction> createMany(List<Restriction> restrictions) {
+        return restrictionRepository.saveAll(restrictions);
+    }
+
     public Restriction update(Restriction restriction) {
         Restriction old = restrictionRepository.findById(restriction.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));

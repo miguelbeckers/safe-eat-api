@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/orders")
@@ -30,6 +32,11 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody Order order) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.create(order));
+    }
+
+    @PostMapping("/many")
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Order> orders) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createMany(orders));
     }
 
     @PutMapping

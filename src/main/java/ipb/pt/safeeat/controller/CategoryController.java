@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/categories")
@@ -32,6 +34,11 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(category));
     }
 
+    @PostMapping("/many")
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Category> categories) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createMany(categories));
+    }
+
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody Category category) {
         return ResponseEntity.ok().body(categoryService.update(category));
@@ -39,6 +46,7 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable String id) {
+        categoryService.delete(id);
         return ResponseEntity.ok().build();
     }
 }

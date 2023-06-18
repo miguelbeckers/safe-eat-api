@@ -9,8 +9,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,6 +39,16 @@ public class AddressService {
 
         user.getAddress().add(created);
         userRepository.save(user);
+
+        return created;
+    }
+
+    @Transactional
+    public List<Address> createMany(List<Address> addresses, String userId) {
+        List<Address> created = new ArrayList<>();
+        for(Address address : addresses) {
+            created.add(create(address, userId));
+        }
 
         return created;
     }

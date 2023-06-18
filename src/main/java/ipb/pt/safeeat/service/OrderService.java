@@ -6,9 +6,11 @@ import ipb.pt.safeeat.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -79,6 +81,16 @@ public class OrderService {
 
         client.getOrders().add(created);
         userRepository.save(client);
+
+        return created;
+    }
+
+    @Transactional
+    public List<Order> createMany(List<Order> orders) {
+        List<Order> created = new ArrayList<>();
+        for(Order order : orders) {
+            created.add(create(order));
+        }
 
         return created;
     }

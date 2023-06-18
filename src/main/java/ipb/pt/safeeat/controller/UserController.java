@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/users")
@@ -30,6 +32,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
+    }
+
+    @PostMapping("/many")
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<User> users) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createMany(users));
     }
 
     @PutMapping

@@ -10,8 +10,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,6 +40,16 @@ public class AdvertisementService {
 
         restaurant.getAdvertisements().add(created);
         restaurantRepository.save(restaurant);
+
+        return created;
+    }
+
+    @Transactional
+    public List<Advertisement> createMany(List<Advertisement> addresses) {
+        List<Advertisement> created = new ArrayList<>();
+        for(Advertisement address : addresses) {
+            created.add(create(address));
+        }
 
         return created;
     }

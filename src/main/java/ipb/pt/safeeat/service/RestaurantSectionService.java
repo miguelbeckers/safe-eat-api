@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -40,6 +41,16 @@ public class RestaurantSectionService {
 
         restaurantSection.setRestaurants(restaurants);
         return restaurantSectionRepository.save(restaurantSection);
+    }
+
+    @Transactional
+    public List<RestaurantSection> createMany(List<RestaurantSection> restaurantSections) {
+        List<RestaurantSection> created = new ArrayList<>();
+        for(RestaurantSection restaurantSection : restaurantSections) {
+            created.add(create(restaurantSection));
+        }
+
+        return created;
     }
 
     public RestaurantSection update(RestaurantSection restaurantSection) {

@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -53,6 +54,16 @@ public class RestaurantService {
 
         owner.getRestaurants().add(created);
         userRepository.save(owner);
+
+        return created;
+    }
+
+    @Transactional
+    public List<Restaurant> createMany(List<Restaurant> restaurants) {
+        List<Restaurant> created = new ArrayList<>();
+        for(Restaurant restaurant : restaurants) {
+            created.add(create(restaurant));
+        }
 
         return created;
     }

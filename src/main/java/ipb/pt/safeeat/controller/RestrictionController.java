@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/restrictions")
@@ -30,6 +32,11 @@ public class RestrictionController {
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody Restriction restriction) {
         return ResponseEntity.status(HttpStatus.CREATED).body(restrictionService.create(restriction));
+    }
+
+    @PostMapping("/many")
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Restriction> restrictions) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(restrictionService.createMany(restrictions));
     }
 
     @PutMapping

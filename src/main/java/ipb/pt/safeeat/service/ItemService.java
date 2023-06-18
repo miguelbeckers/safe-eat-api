@@ -13,8 +13,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,6 +52,16 @@ public class ItemService {
 
         cart.getItems().add(created);
         cartRepository.save(cart);
+
+        return created;
+    }
+
+    @Transactional
+    public List<Item> createMany(List<Item> items, String cartId) {
+        List<Item> created = new ArrayList<>();
+        for(Item item : items) {
+            created.add(create(item, cartId));
+        }
 
         return created;
     }

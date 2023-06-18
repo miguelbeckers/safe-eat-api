@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/advertisements")
@@ -30,6 +32,11 @@ public class AdvertisementController {
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody Advertisement advertisement) {
         return ResponseEntity.status(HttpStatus.CREATED).body(advertisementService.create(advertisement));
+    }
+
+    @PostMapping("/many")
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Advertisement> advertisements) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(advertisementService.createMany(advertisements));
     }
 
     @PutMapping

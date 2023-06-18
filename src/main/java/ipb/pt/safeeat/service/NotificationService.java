@@ -10,9 +10,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,6 +46,16 @@ public class NotificationService {
         notification.setTime(LocalDateTime.now());
 
         return notificationRepository.save(notification);
+    }
+
+    @Transactional
+    public List<Notification> createMany(List<Notification> notifications) {
+        List<Notification> created = new ArrayList<>();
+        for(Notification notification : notifications) {
+            created.add(create(notification));
+        }
+
+        return created;
     }
 
     public Notification update(Notification notification) {

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/ingredients")
@@ -30,6 +32,11 @@ public class IngredientController {
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody Ingredient ingredient) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.create(ingredient));
+    }
+
+    @PostMapping("/many")
+    public ResponseEntity<Object> createMany(@Valid @RequestBody List<Ingredient> ingredients) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ingredientService.createMany(ingredients));
     }
 
     @PutMapping
