@@ -15,7 +15,7 @@ import java.util.List;
 public class Home {
     @Id
     private String id;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Object> content;
 }

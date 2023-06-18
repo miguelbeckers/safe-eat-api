@@ -24,19 +24,19 @@ public class Restaurant {
     private String logo;
     @NotEmpty(message = "Invalid cover")
     private String cover;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @NotEmpty(message = "Invalid categories")
     private List<Category> categories;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @JsonIgnore
     private List<Product> products;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @JsonIgnore
     private List<ProductSection> productSections;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @JsonIgnore
     private List<Advertisement> advertisements;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Delivery> deliveries;
     @DocumentReference(lazy=true)

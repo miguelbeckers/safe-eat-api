@@ -1,11 +1,11 @@
 package ipb.pt.safeeat.service;
 
 import ipb.pt.safeeat.constants.CartConstants;
+import ipb.pt.safeeat.constants.UserConstants;
 import ipb.pt.safeeat.model.Cart;
-import ipb.pt.safeeat.model.Item;
+import ipb.pt.safeeat.model.User;
 import ipb.pt.safeeat.repository.CartRepository;
-import ipb.pt.safeeat.repository.RestaurantRepository;
-import org.springframework.beans.BeanUtils;
+import ipb.pt.safeeat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class CartService {
     @Autowired
     private CartRepository cartRepository;
     @Autowired
-    private RestaurantRepository restaurantRepository;
+    private UserRepository userRepository;
 
     public List<Cart> getAll() {
         return cartRepository.findAll();
@@ -29,26 +29,27 @@ public class CartService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CartConstants.NOT_FOUND));
     }
 
-    public Cart create(Cart cart) {
-        if(cart.getItems() != null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Items are not accepted. Use create items instead.");
-        }
+    public Cart create(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserConstants.NOT_FOUND));
 
-        int quantity = cart.getItems().size();
-        double subtotal = cart.getItems().stream().mapToDouble(Item::getSubtotal).sum();
+        Cart cart = new Cart();
+        Cart created = cartRepository.save(cart);
 
-        cart.setQuantity(quantity);
-        cart.setSubtotal(subtotal);
+        user.setCart(created);
+        userRepository.save(user);
 
-        return cartRepository.save(cart);
+        return created;
     }
 
-    public Cart update(Cart cart) {
-        Cart old = cartRepository.findById(cart.getId()).orElseThrow(
+    public Cart reset(String cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, CartConstants.NOT_FOUND));
 
-        BeanUtils.copyProperties(cart, old);
+        cart.getItems().clear();
+        cart.setQuantity(0);
+        cart.setSubtotal(0.0);
+
         return cartRepository.save(cart);
     }
 

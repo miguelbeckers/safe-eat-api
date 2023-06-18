@@ -20,7 +20,7 @@ public class Ingredient {
     private String name;
     @NotEmpty(message = "Invalid description")
     private String description;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private List<Restriction> restrictions;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;

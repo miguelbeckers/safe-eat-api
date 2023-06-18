@@ -34,6 +34,7 @@ public class AddressService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, AddressConstants.NOT_FOUND));
 
         Address created = addressRepository.save(address);
+
         user.getAddress().add(created);
         userRepository.save(user);
 

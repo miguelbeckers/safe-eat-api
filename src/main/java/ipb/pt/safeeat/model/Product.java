@@ -22,10 +22,10 @@ public class Product {
     private Double price;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isRestricted;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @NotEmpty(message = "Invalid categories")
     private List<Category> categories;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @NotEmpty(message = "Invalid ingredients")
     private List<Ingredient> ingredients;
 }

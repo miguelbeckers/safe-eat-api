@@ -47,6 +47,7 @@ public class ItemService {
         item.setProduct(product);
 
         Item created = itemRepository.save(item);
+
         cart.getItems().add(created);
         cartRepository.save(cart);
 

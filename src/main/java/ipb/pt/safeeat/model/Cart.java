@@ -20,7 +20,7 @@ public class Cart {
     private Integer quantity = 0;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double subtotal = 0.0;
-    @DocumentReference
-    @NotEmpty(message = "Invalid items")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @DocumentReference(lazy=true)
     private List<Item> items;
 }

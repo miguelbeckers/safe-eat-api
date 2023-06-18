@@ -27,22 +27,22 @@ public class User {
     private String email;
     @NotEmpty(message = "Invalid cellphone")
     private String cellphone;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private List<Restriction> restrictions;
     @JsonIgnore
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private Cart cart;
     @JsonIgnore
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private List<Payment> payments;
     @JsonIgnore
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private List<Address> address;
     @JsonIgnore
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private List<Order> orders;
     @JsonIgnore
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private List<Notification> notifications;
     @JsonIgnore
     @DocumentReference(lazy=true)

@@ -35,6 +35,7 @@ public class DeliveryService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, DeliveryConstants.NOT_FOUND));
 
         Delivery created = deliveryRepository.save(delivery);
+
         restaurant.getDeliveries().add(created);
         restaurantRepository.save(restaurant);
 

@@ -50,6 +50,7 @@ public class ProductSectionService {
 
         productSection.setProducts(products);
         ProductSection created = productSectionRepository.save(productSection);
+
         restaurant.getProductSections().add(created);
         restaurantRepository.save(restaurant);
 

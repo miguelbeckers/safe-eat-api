@@ -37,9 +37,9 @@ public class Order {
     @NotEmpty(message = "Invalid items")
     private List<Item> items;
     @NotNull(message = "Invalid restaurant")
-    @DocumentReference
+    @DocumentReference(lazy=true)
     private Restaurant restaurant;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Feedback feedback;
     @NotNull(message = "Invalid client")

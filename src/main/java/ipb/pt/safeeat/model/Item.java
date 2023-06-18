@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 public class Item {
     @Id
     private String id;
-    @DocumentReference
+    @DocumentReference(lazy=true)
     @NotNull(message = "Invalid product")
     private Product product;
     @NotNull(message = "Invalid quantity")

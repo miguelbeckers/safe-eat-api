@@ -37,8 +37,7 @@ public class UserService {
 
     public User create(User user) {
         if (user.getPassword().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Invalid password");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid password");
         }
 
         if (user.getRestrictions() != null && !user.getRestrictions().isEmpty()) {
@@ -50,7 +49,6 @@ public class UserService {
 
             user.setRestrictions(restrictions);
         }
-
 
         Cart cart = cartRepository.save(new Cart());
         user.setCart(cart);

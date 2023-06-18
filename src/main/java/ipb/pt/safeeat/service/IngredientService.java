@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,9 +33,10 @@ public class IngredientService {
 
     public Ingredient create(Ingredient ingredient) {
         if (ingredient.getRestrictions() != null && !ingredient.getRestrictions().isEmpty()) {
+            List<Restriction> restrictions = new ArrayList<>();
             for (Restriction restriction : ingredient.getRestrictions()) {
-                restrictionRepository.findById(restriction.getId()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND));
+                restrictions.add(restrictionRepository.findById(restriction.getId()).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, RestaurantConstants.NOT_FOUND)));
             }
         }
 

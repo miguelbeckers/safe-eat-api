@@ -38,6 +38,7 @@ public class PaymentService {
 
         user.getPayments().add(created);
         userRepository.save(user);
+
         return created;
     }
 
